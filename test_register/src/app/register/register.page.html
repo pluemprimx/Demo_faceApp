@@ -45,26 +45,26 @@
     </ion-list> -->
 
      
-<form>
+
     <ion-list lines="full" class="ion-no-margin ion-no-padding">
       <ion-item>
           <ion-label position="stacked">Username<ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text" ionBlur oninput="handleUsernameValue(event)"></ion-input>
+          <ion-input required type="text"  [(ngModel)]="registerData.uesrname" ></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">First Name <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input required type="text" oninput="handleFirstNameValue(event)"></ion-input>
+        <ion-input required type="text" value="" [(ngModel)]="registerData.firstName" ></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Last Name <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input required type="text" oninput="handleLastNameValue(event)"></ion-input>
+        <ion-input required type="text" value="" [(ngModel)]="registerData.lastName" ></ion-input>
       </ion-item>
 
       <ion-item>
           <ion-label position="stacked">Password <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text" oninput="handPasswordValue(event)"></ion-input>
+          <ion-input required type="Password" value="" [(ngModel)]="registerData.password" ></ion-input>
         </ion-item>
        <!-- <ion-item>
        <ion-label position="stacked">Address</ion-label>
@@ -82,9 +82,9 @@
     </ion-list>
 
     <div class="ion-padding">
-        <ion-button expand="block" type="submit" class="ion-no-margin">Create account</ion-button>
+        <ion-button expand="block" type="submit" class="ion-no-margin" (click)="register()">Create account</ion-button>
       </div>
-    </form>
+ 
 
 </ion-content>
 
