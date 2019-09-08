@@ -14,12 +14,12 @@ export class AppComponent {
     {
       title: 'Register',
       url: '/register',
-      icon: 'home'
+      icon: 'create'
     },
     {
       title: 'Log in',
       url: '/login',
-      icon: 'list'
+      icon: 'log-in'
     }
   ];
 

@@ -1,3 +1,5 @@
+
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -42,12 +44,70 @@
       </ion-item>
     </ion-list> -->
 
-    <form>
-      <p>Username</p>
-      <input type="text">
+     
+<form>
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+      <ion-item>
+          <ion-label position="stacked">Username<ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text" ionBlur oninput="handleUsernameValue(event)"></ion-input>
+      </ion-item>
 
+      <ion-item>
+        <ion-label position="stacked">First Name <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="text" oninput="handleFirstNameValue(event)"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Last Name <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="text" oninput="handleLastNameValue(event)"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label position="stacked">Password <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text" oninput="handPasswordValue(event)"></ion-input>
+        </ion-item>
+       <!-- <ion-item>
+       <ion-label position="stacked">Address</ion-label>
+        <ion-input placeholder="Address Line 1"></ion-input>
+        <ion-input placeholder="Address Line 2"></ion-input> 
+        <ion-input placeholder="City"></ion-input>
+        <ion-input placeholder="State"></ion-input>
+        <ion-input placeholder="Zip Code"></ion-input> 
+      </ion-item>-->
+
+      <!-- <ion-item>
+        <ion-label position="stacked">Notes</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item> -->
+    </ion-list>
+
+    <div class="ion-padding">
+        <ion-button expand="block" type="submit" class="ion-no-margin">Create account</ion-button>
+      </div>
     </form>
 
-
-
 </ion-content>
+
+ <!-- <ion-alert></ion-alert> 
+
+<script>
+    const controller = document.querySelector('ion-alert');
+    let firstName, lastName;
+    function processForm(event) {
+      event.preventDefault();
+      controller.create({
+        header: 'Account Created',
+        message: `Created account for: <b>${firstName} ${lastName}</b>`,
+        buttons: [{
+          text: 'OK'
+        }]
+      }).then(alert => alert.present());
+    }
+    function handleFirstNameValue(event) {
+      firstName = event.target.value;
+    }
+    function handleLastNameValue(event) {
+      lastName = event.target.value;
+    }
+  </script>  -->
+  
