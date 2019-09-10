@@ -16,19 +16,23 @@
     $firstname = $_POST['firstname'];
     $lastname =   $_POST['lastname']; 
     $password = $_POST['password'];
+    $con_password = $_POST['con_password'];
+    $email = $_POST['email'];
+    $tel = $_POST['tel'];
 
 //    $username =   ppp; 
 //     $firstname = puwa;
 //     $lastname =   pha; 
 //     $password = 123456;
 
-    $sql = "INSERT INTO `member`(`username`, `firstname`, `lastname`, `password`) VALUE ('$username','$firstname','$lastname',' $password') ";
+    $sql = "INSERT INTO `member`(`faceId`, `username`, `firstname`, `lastname`, `password`, `con_password`, `email`, `tel`) 
+    VALUE ('','$username','$firstname','$lastname','$password','$con_password','$email','$tel') ";
     $q = mysqli_query($con,$sql);
         if($q){
-            $message['status'] = "success";
+            $message = "success";
         }
         else{
-            $message['status'] = "error";
+            $message = "error";
         }
        echo json_encode($message);
   
