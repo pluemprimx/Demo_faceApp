@@ -1,37 +1,73 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: 'login.page.html',
   styleUrls: ['login.page.scss']
 })
-export class loginPage implements OnInit {
-  private selectedItem: any;
-  private icons = [
-    'flask',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+export class loginPage {
+
+  loginData:any = {};
+
+
+  // private selectedItem: any;
+  // private icons = [
+  //   'flask',
+  //   'wifi',
+  //   'beer',
+  //   'football',
+  //   'basketball',
+  //   'paper-plane',
+  //   'american-football',
+  //   'boat',
+  //   'bluetooth',
+  //   'build'
+  // ];
+
+  // public items: Array<{ title: string; note: string; icon: string }> = [];
+
+  constructor(public https:HttpClient,private page : Router) {
+    // for (let i = 1; i < 11; i++) {
+    //   this.items.push({
+    //     title: 'Item ' + i,
+    //     note: 'This is item #' + i,
+    //     icon: this.icons[Math.floor(Math.random() * this.icons.length)]
+    //   });
+    // }
   }
 
-  ngOnInit() {
+ 
+
+login(){
+ 
+  if(this.loginData.username != "" && this.loginData.password != ""){
+  console.log("uesr:",this.loginData.username);
+  console.log("password:",this.loginData.password);
+
+  let url:string = "http://localhost/test_demoface/login.php";
+
+  let datapost = new FormData();
+  datapost.append('username',this.loginData.username);
+  datapost.append('password',this.loginData.password);
+
+  let data:Observable<any> =  this.https.post(url,datapost);
+  data.subscribe(res =>{
+    console.log(res);
+     if(res === 'success'){
+       console.log("ok")
+      let nextpage :string = "home";
+      this.page.navigateByUrl(nextpage);
+     }              
+    });
+  }else{
+    console.log(false);
+    
   }
+}
+
   // add back when alpha.4 is out
   // navigate(item) {
   //   this.router.navigate(['/list', JSON.stringify(item)]);

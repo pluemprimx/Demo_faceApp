@@ -20,4 +20,6 @@ import { loginPage } from './login.page';
   ],
   declarations: [loginPage]
 })
-export class loginPageModule {}
+export class loginPageModule {
+  
+}

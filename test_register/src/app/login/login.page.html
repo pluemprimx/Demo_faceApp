@@ -10,18 +10,22 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let item of items">
-      <ion-icon [name]="item.icon" slot="start"></ion-icon>
-      {{item.title}}
-      <div class="item-note" slot="end">
-        {{item.note}}
-      </div>
+  <ion-list lines="full" class="ion-no-margin ion-no-padding">
+    <ion-item>
+        <ion-label position="stacked">Username<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="text"  [(ngModel)]="loginData.username" ></ion-input>
     </ion-item>
+
+    <ion-item>
+        <ion-label position="stacked">Password <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="Password" value="" [(ngModel)]="loginData.password" ></ion-input>
+      </ion-item>
+
   </ion-list>
-  <!--
-    <div *ngIf="selectedItem" padding>
-      You navigated here from <b>{{selectedItem.title }}</b>
+
+  <div class="ion-padding">
+      <ion-button expand="block" type="submit" class="ion-no-margin" (click)="login()">Log In</ion-button>
     </div>
-  -->
+
+
 </ion-content>
