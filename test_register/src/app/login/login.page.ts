@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { DatapassService } from '../datapass.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,7 @@ export class loginPage {
 
   // public items: Array<{ title: string; note: string; icon: string }> = [];
 
-  constructor(public https:HttpClient,private page : Router) {
+  constructor(public https:HttpClient,private page : Router,private datapass : DatapassService) {
     // for (let i = 1; i < 11; i++) {
     //   this.items.push({
     //     title: 'Item ' + i,
@@ -44,8 +45,8 @@ export class loginPage {
 login(){
  
   if(this.loginData.username != "" && this.loginData.password != ""){
-  console.log("uesr:",this.loginData.username);
-  console.log("password:",this.loginData.password);
+ // console.log("uesr:",this.loginData.username);
+ // console.log("password:",this.loginData.password);
 
   let url:string = "http://localhost/test_demoface/login.php";
 
@@ -56,12 +57,20 @@ login(){
   let data:Observable<any> =  this.https.post(url,datapost);
   data.subscribe(res =>{
     console.log(res);
-     if(res === 'success'){
-       console.log("ok")
+     if(res != ''){
+      console.log("ok");
+      console.log(res[0].username);
+      console.log(res[0].password);
+      this.datapass.loginData = res;
+      this.datapass.username = res[0].username;
+      this.datapass.firstname = res[0].firstname;
+      this.datapass.lastname = res[0].lastname;
       let nextpage :string = "home";
       this.page.navigateByUrl(nextpage);
      }              
-    });
+    }
+    );
+    
   }else{
     console.log(false);
     

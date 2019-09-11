@@ -9,23 +9,26 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+
+
+<ion-content padding>
+    <form #form="ngForm" (ngSubmit)="login(form)">
   <ion-list lines="full" class="ion-no-margin ion-no-padding">
     <ion-item>
         <ion-label position="stacked">Username<ion-text color="danger">*</ion-text></ion-label>
-        <ion-input required type="text"  [(ngModel)]="loginData.username" ></ion-input>
+        <ion-input required type="text" name="username" id="username" [(ngModel)]="loginData.username" ></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label position="stacked">Password <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input required type="Password" value="" [(ngModel)]="loginData.password" ></ion-input>
+        <ion-input required type="Password" name="password" id="password" [(ngModel)]="loginData.password" ></ion-input>
       </ion-item>
 
   </ion-list>
 
   <div class="ion-padding">
-      <ion-button expand="block" type="submit" class="ion-no-margin" (click)="login()">Log In</ion-button>
+      <ion-button expand="block" type="submit" class="button" [disabled]="form.invalid">Log In</ion-button>
     </div>
-
+</form>
 
 </ion-content>

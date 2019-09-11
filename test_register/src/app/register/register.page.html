@@ -11,7 +11,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
     <!-- <ion-card class="welcome-card">
       <img src="/assets/shapes.svg" alt="" />
       <ion-card-header>
@@ -44,59 +44,47 @@
       </ion-item>
     </ion-list> -->
 
-     
+    <form #form="ngForm" (ngSubmit)="register(form)">
 
     <ion-list lines="full" class="ion-no-margin ion-no-padding">
       <ion-item>
           <ion-label position="stacked">Username<ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text" [(ngModel)]="registerData.username" ></ion-input>
+          <ion-input required type="text" name="username" id="username" [(ngModel)]="registerData.username" ></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">First Name <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input required type="text" value="" [(ngModel)]="registerData.firstName" ></ion-input>
+        <ion-input required type="text" name="firstName" id="firstName" [(ngModel)]="registerData.firstName" ></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Last Name <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input required type="text" value="" [(ngModel)]="registerData.lastName" ></ion-input>
+        <ion-input required type="text" name="lastName" id="lastName" [(ngModel)]="registerData.lastName" ></ion-input>
       </ion-item>
 
       <ion-item>
           <ion-label position="stacked">Password <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="Password" value="" [(ngModel)]="registerData.password" ></ion-input>
+          <ion-input required type="Password" name="password" id="password" [(ngModel)]="registerData.password" ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Confrim Password <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="Password" value="" [(ngModel)]="registerData.con_password" ></ion-input>
+          <ion-input required type="Password" name="con_password" id="con_password" [(ngModel)]="registerData.con_password"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Email <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="email" inputmode="email" value="" [(ngModel)]="registerData.email" ></ion-input>
+          <ion-input required type="email" name="email" id="email" inputmode="email" [(ngModel)]="registerData.email" ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">tel <ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="text" value="" [(ngModel)]="registerData.tel"></ion-input>
+          <ion-label position="stacked">Tel <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text" name="tel" id="tel" [(ngModel)]="registerData.tel"></ion-input>
         </ion-item>
-       <!-- <ion-item>
-       <ion-label position="stacked">Address</ion-label>
-        <ion-input placeholder="Address Line 1"></ion-input>
-        <ion-input placeholder="Address Line 2"></ion-input> 
-        <ion-input placeholder="City"></ion-input>
-        <ion-input placeholder="State"></ion-input>
-        <ion-input placeholder="Zip Code"></ion-input> 
-      </ion-item>-->
-
-      <!-- <ion-item>
-        <ion-label position="stacked">Notes</ion-label>
-        <ion-textarea></ion-textarea>
-      </ion-item> -->
+       
     </ion-list>
 
     <div class="ion-padding">
-        <ion-button expand="block" type="submit" class="ion-no-margin" (disabled)="register()">Create account</ion-button>
+        <ion-button expand="block" type="submit" class="button" [disabled]="form.invalid" >Create account</ion-button>
       </div>
- 
+    </form> 
 
 </ion-content>
 

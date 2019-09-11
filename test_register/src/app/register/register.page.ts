@@ -14,15 +14,14 @@ import { Router } from '@angular/router';
 export class registerPage {
 
   registerData:any = {};
+  username:string ;
+  constructor(public https:HttpClient,private page : Router,public navCtrl: NavController) {
 
-  constructor(public https:HttpClient,private page : Router) {
-
-    this.registerData.uesrname = "";
-    this.registerData.firstName = "";
-    this.registerData.lastName = "";
-    this.registerData.password = "";
+    // this.registerData.firstName = "";
+    // this.registerData.lastName = "";
+    // this.registerData.password = "";
   }
-
+    
   // checkpassword(password,con_password){
   //   console.log("password:",password);
   //   console.log("confirm password:",con_password);
@@ -30,13 +29,15 @@ export class registerPage {
   // }
 
   register(){
-      if(this.registerData.username != "" 
+       if(
+        this.registerData.username != "" 
       &&  this.registerData.firstName != "" 
       && this.registerData.lastName != "" 
       && this.registerData.password != ""
       && this.registerData.con_password != ""
       && this.registerData.email != ""
-      && this.registerData.tel != ""){
+      && this.registerData.tel != ""
+      ){
           console.log("uesr:",this.registerData.username);
           console.log("firstName:",this.registerData.firstName);
           console.log("lastName:",this.registerData.lastName);
@@ -65,11 +66,13 @@ export class registerPage {
          data.subscribe(res =>{
           console.log(res);
            if(res === 'success'){
-             console.log("ok")
+             console.log("ok");
             let nextpage :string = "login";
             this.page.navigateByUrl(nextpage);
            }              
           });
+      console.log("uesr:",this.registerData.username);
+          console.log("ok");
           
         }else{
           console.log("false");
