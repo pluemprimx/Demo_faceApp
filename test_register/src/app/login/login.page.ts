@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { DatapassService } from '../datapass.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,7 @@ export class loginPage {
 
   // public items: Array<{ title: string; note: string; icon: string }> = [];
 
-  constructor(public https:HttpClient,private page : Router,private datapass : DatapassService) {
+  constructor(public https:HttpClient,private page : Router,private datapass : DatapassService,public alertController: AlertController) {
     // for (let i = 1; i < 11; i++) {
     //   this.items.push({
     //     title: 'Item ' + i,
@@ -57,7 +58,7 @@ login(){
   let data:Observable<any> =  this.https.post(url,datapost);
   data.subscribe(res =>{
     console.log(res);
-     if(res != ''){
+     if(res != null){
       console.log("ok");
       console.log(res[0].username);
       console.log(res[0].password);
@@ -67,14 +68,29 @@ login(){
       this.datapass.lastname = res[0].lastname;
       let nextpage :string = "home";
       this.page.navigateByUrl(nextpage);
-     }              
+     }else{
+      this.checkLogin();
+     }
+              
     }
     );
     
   }else{
     console.log(false);
+    this.datapass.checkLogin = false;
     
   }
+}
+
+async checkLogin() {
+  const alert = await this.alertController.create({
+    header: 'login is incorrect!',
+    subHeader: 'please try again',
+    message: 'Username or Password is incorrect!',
+    buttons: ['OK']
+  });
+
+  await alert.present();
 }
 
   // add back when alpha.4 is out

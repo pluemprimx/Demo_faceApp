@@ -10,7 +10,13 @@
 </ion-header>
 
 <ion-content padding>
+ <!--<ion-card *ngif="{{username}} != null"> 
     Username : {{username}}<br>
-    Firstname : {{firstname}}<br>
-    Lastname : {{lastname}}
+    name : {{firstname}} {{lastname}}
+  </ion-card> -->
+  <div *ngIf="username != null; else elseBlock">
+    Hello<br>
+    Username : {{username}}<br>
+    name : {{firstname}} {{lastname}}</div>
+  <ng-template #elseBlock>please log in</ng-template>
 </ion-content>

@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 //import { HTTP } from '@ionic-native/http/ngx';
 import { loginPage } from '../login/login.page';
 import { Observable } from 'rxjs';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-register',
@@ -15,42 +16,35 @@ export class registerPage {
 
   registerData:any = {};
   username:string ;
-  constructor(public https:HttpClient,private page : Router,public navCtrl: NavController) {
+  constructor(public https:HttpClient,private page : Router,public navCtrl: NavController,public alertController: AlertController,private camera: Camera) {
 
-    // this.registerData.firstName = "";
-    // this.registerData.lastName = "";
-    // this.registerData.password = "";
+    
   }
-    
-  // checkpassword(password,con_password){
-  //   console.log("password:",password);
-  //   console.log("confirm password:",con_password);
-    
-  // }
 
+    
   register(){
-       if(
-        this.registerData.username != "" 
-      &&  this.registerData.firstName != "" 
-      && this.registerData.lastName != "" 
-      && this.registerData.password != ""
-      && this.registerData.con_password != ""
-      && this.registerData.email != ""
-      && this.registerData.tel != ""
-      ){
+       if(this.registerData.password === this.registerData.con_password ){
           console.log("uesr:",this.registerData.username);
           console.log("firstName:",this.registerData.firstName);
           console.log("lastName:",this.registerData.lastName);
           console.log("password:",this.registerData.password);
           console.log("confirm password:",this.registerData.con_password);
-          //this.registerData.action = "insert";
+
+          const options :CameraOptions = {
+            quality: 100,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE
+          }
+
+          this.camera.getPicture(options).then(value=>{
+              console.log(value);
+          }).catch(err=>{
+            console.log(err);
+          })
+
           let url:string = "http://localhost/test_demoface/register.php";
-          // let dataPost = JSON.stringify({
-          //       username:this.registerData.username,
-          //       firstName:this.registerData.firstName ,
-          //       lastName:this.registerData.lastName ,
-          //       password:this.registerData.password
-          // });
+         
           let datapost = new FormData();
           datapost.append('username',this.registerData.username);
           datapost.append('firstname',this.registerData.firstName);
@@ -69,41 +63,37 @@ export class registerPage {
              console.log("ok");
             let nextpage :string = "login";
             this.page.navigateByUrl(nextpage);
+           }else{
+            this.varidateUsername();
            }              
           });
-      console.log("uesr:",this.registerData.username);
+          console.log("uesr:",this.registerData.username);
           console.log("ok");
           
         }else{
           console.log("false");
-          // alert("Please fill out all information.");
+          this.passwordComfirm();
         }
     
   }
 
-  //  register(){
-  //     if(this.registerData.uesrname != "" &&  this.registerData.firstName != "" && this.registerData.lastName != "" && this.registerData.password != ""){
-  //         console.log("uesr:",this.registerData.uesrname);
-  //         console.log("firstName:",this.registerData.firstName);
-  //         console.log("lastName:",this.registerData.lastName);
-  //         console.log("password:",this.registerData.password);
+ async passwordComfirm() {
+  const alert = await this.alertController.create({
+    header: 'please try again!',
+    message: 'Password and confirm password is Mismatch!',
+    buttons: ['OK']
+  });
 
-  //         this.registerData.action = "insert";
-  //         this.http.post("http://localhost/test_demoface/register.php",this.registerData,).subscribe(data=>{console.log(data);
-  //         let result = JSON.parse(data["_body"]);
-  //         if(result.status == "success"){
-  //           console.log("Inserted successfully");
-  //         }else{
-  //           console.log("Something went wrong");
-  //           }
-            
-  //         })
-
-  //       }else{
-  //         console.log("false");
-  //       }
-    
- // }
-
+  await alert.present();
+}
   
+async varidateUsername() {
+  const alert = await this.alertController.create({
+    header: 'please try again!',
+    message: 'Username is already!',
+    buttons: ['OK']
+  });
+
+  await alert.present();
+}
 }

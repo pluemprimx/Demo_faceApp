@@ -8,5 +8,6 @@ export class DatapassService {
   public username;
   public firstname;
   public lastname;
+  public checkLogin;
   constructor() { }
 }

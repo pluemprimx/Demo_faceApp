@@ -30,5 +30,7 @@
       <ion-button expand="block" type="submit" class="button" [disabled]="form.invalid">Log In</ion-button>
     </div>
 </form>
-
+    <div *ngIf="checkLogin != false; else elseBlock"> </div>
+    <ng-template #elseBlock>Username or Password is incorrect!</ng-template>
+    
 </ion-content>
