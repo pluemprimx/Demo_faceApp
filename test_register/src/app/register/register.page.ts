@@ -36,13 +36,11 @@ export class registerPage {
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE
           }
+      
+          this.camera.getPicture(options).then(imageData=>{
+              console.log(imageData);
 
-          this.camera.getPicture(options).then(value=>{
-              console.log(value);
-          }).catch(err=>{
-            console.log(err);
-          })
-
+          let pic = 'data:image/jpeg;base64,' + imageData;
           let url:string = "http://localhost/test_demoface/register.php";
          
           let datapost = new FormData();
@@ -53,28 +51,51 @@ export class registerPage {
           datapost.append('con_password',this.registerData.con_password);
           datapost.append('email',this.registerData.email);
           datapost.append('tel',this.registerData.tel);
+          datapost.append('pic',pic);
                  
           
           let data:Observable<any> =  this.https.post(url,datapost);
-          //  .map(res=>res.json())
-         data.subscribe(res =>{
-          console.log(res);
-           if(res === 'success'){
-             console.log("ok");
-            let nextpage :string = "login";
-            this.page.navigateByUrl(nextpage);
-           }else{
-            this.varidateUsername();
-           }              
-          });
+          
+              data.subscribe(res =>{
+              console.log(res);
+              if(res === 'success'){
+                console.log("ok");
+                let nextpage :string = "login";
+                this.page.navigateByUrl(nextpage);
+              }else{
+                this.varidateUsername();
+              }              
+              });
           console.log("uesr:",this.registerData.username);
           console.log("ok");
+
+
+          }).catch(err=>{
+            console.log(err);
+          })
+
+          
           
         }else{
           console.log("false");
           this.passwordComfirm();
         }
     
+  }
+
+  takePhoto(){
+    // const options :CameraOptions = {
+    //   quality: 100,
+    //   destinationType: this.camera.DestinationType.DATA_URL,
+    //   encodingType: this.camera.EncodingType.JPEG,
+    //   mediaType: this.camera.MediaType.PICTURE
+    // }
+
+    // this.camera.getPicture(options).then(value=>{
+    //     console.log(value);
+    // }).catch(err=>{
+    //   console.log(err);
+    // })
   }
 
  async passwordComfirm() {
