@@ -49,7 +49,7 @@ login(){
  // console.log("uesr:",this.loginData.username);
  // console.log("password:",this.loginData.password);
 
-  let url:string = "http://localhost/test_demoface/login.php";
+  let url:string = "https://ptphpa.000webhostapp.com/login.php";
 
   let datapost = new FormData();
   datapost.append('username',this.loginData.username);
@@ -66,6 +66,7 @@ login(){
       this.datapass.username = res[0].username;
       this.datapass.firstname = res[0].firstname;
       this.datapass.lastname = res[0].lastname;
+      this.datapass.pic = res[0].pic;
       let nextpage :string = "home";
       this.page.navigateByUrl(nextpage);
      }else{

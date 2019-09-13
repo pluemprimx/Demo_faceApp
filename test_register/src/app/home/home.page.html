@@ -9,14 +9,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content >
  <!--<ion-card *ngif="{{username}} != null"> 
     Username : {{username}}<br>
     name : {{firstname}} {{lastname}}
   </ion-card> -->
+ 
   <div *ngIf="username != null; else elseBlock">
-    Hello<br>
+  <ion-card>
+      <ion-card-header>
+          <ion-card-title> Hello {{username}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+    <ion-img src="{{pic}}"></ion-img><br>
     Username : {{username}}<br>
-    name : {{firstname}} {{lastname}}</div>
-  <ng-template #elseBlock>please log in</ng-template>
+    name : {{firstname}} {{lastname}}
+  </ion-card-content>
+  </ion-card>
+  </div >
+  
+    <ion-label class="padding">
+      <ng-template #elseBlock >please log in</ng-template>
+    </ion-label>
+
 </ion-content>

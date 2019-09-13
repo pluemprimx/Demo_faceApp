@@ -29,10 +29,12 @@ export class registerPage {
           console.log("lastName:",this.registerData.lastName);
           console.log("password:",this.registerData.password);
           console.log("confirm password:",this.registerData.con_password);
+          console.log("email",this.registerData.email);
+          console.log("tel",this.registerData.tel);
 
           const options :CameraOptions = {
             quality: 100,
-            destinationType: this.camera.DestinationType.NATIVE_URI,
+            destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE
           }
@@ -41,7 +43,7 @@ export class registerPage {
               console.log(imageData);
 
           let pic = 'data:image/jpeg;base64,' + imageData;
-          let url:string = "http://localhost/test_demoface/register.php";
+          let url:string = "https://ptphpa.000webhostapp.com/register.php";
          
           let datapost = new FormData();
           datapost.append('username',this.registerData.username);
