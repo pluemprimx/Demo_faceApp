@@ -19,14 +19,19 @@
     $con_password = $_POST['con_password'];
     $email = $_POST['email'];
     $tel = $_POST['tel'];
+    $pic0 = $_POST['pic0'];
+    $pic1 = $_POST['pic1'];
+    $pic2 = $_POST['pic2'];
+    $pic3 = $_POST['pic3'];
+    $pic4 = $_POST['pic4'];
 
 //    $username =   ppp; 
 //     $firstname = puwa;
 //     $lastname =   pha; 
 //     $password = 123456;
 
-    $sql = "INSERT INTO `member`(`faceId`, `username`, `firstname`, `lastname`, `password`, `con_password`, `email`, `tel`) 
-    VALUE ('','$username','$firstname','$lastname','$password','$con_password','$email','$tel') ";
+    $sql = "INSERT INTO `member`(`username`, `firstname`, `lastname`, `password`, `con_password`, `email`, `tel`, `pic0`, `pic1`, `pic2`, `pic3`, `pic4`) 
+    VALUE ('$username','$firstname','$lastname','$password','$con_password','$email','$tel','$pic0','$pic1','$pic2','$pic3','$pic4') ";
     $q = mysqli_query($con,$sql);
         if($q){
             $message = "success";
@@ -36,6 +41,7 @@
         }
        echo json_encode($message);
   
+       
  //echo mysqli_error($con);
 //------------------------------
 //   $input = file_get_contents('php://input');

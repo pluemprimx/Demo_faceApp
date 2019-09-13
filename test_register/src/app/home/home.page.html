@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="padding">
  <!--<ion-card *ngif="{{username}} != null"> 
     Username : {{username}}<br>
     name : {{firstname}} {{lastname}}
@@ -18,18 +18,34 @@
   <div *ngIf="username != null; else elseBlock">
   <ion-card>
       <ion-card-header>
-          <ion-card-title> Hello {{username}}</ion-card-title>
+          <ion-card-title>
+              <ion-icon name="contact"></ion-icon>
+               {{username}}
+          </ion-card-title>
       </ion-card-header>
-      <ion-card-content>
-    <ion-img src="{{pic}}"></ion-img><br>
+      
+    <ion-img class="profile" src="{{pic}}"></ion-img><br>
+  
+    <ion-card-content style="color: black"> 
     Username : {{username}}<br>
-    name : {{firstname}} {{lastname}}
-  </ion-card-content>
+    Name : {{firstname}} {{lastname}}
+    </ion-card-content>
+    
   </ion-card>
   </div >
-  
-    <ion-label class="padding">
-      <ng-template #elseBlock >please log in</ng-template>
-    </ion-label>
+
+  <ng-template #elseBlock >
+    <div class="padding1">
+      <ion-button color="danger" expand="block" fill="outline" routerLink="/login" routerDirection="root">
+        <ion-icon name="log-in"></ion-icon>
+        Please log in
+      </ion-button>
+      <p style="text-align: center">or</p>
+      <ion-button color="success" expand="block" fill="outline" routerLink="/register" routerDirection="root">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        Register
+      </ion-button>
+    </div>
+  </ng-template>
 
 </ion-content>

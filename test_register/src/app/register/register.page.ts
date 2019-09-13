@@ -16,6 +16,8 @@ export class registerPage {
 
   registerData:any = {};
   username:string ;
+  picArray = [];
+  index:any;
   constructor(public https:HttpClient,private page : Router,public navCtrl: NavController,public alertController: AlertController,private camera: Camera) {
 
     
@@ -32,51 +34,116 @@ export class registerPage {
           console.log("email",this.registerData.email);
           console.log("tel",this.registerData.tel);
 
+          let DIMENSION = 100;
           const options :CameraOptions = {
             quality: 100,
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE
+            mediaType: this.camera.MediaType.PICTURE,
+            correctOrientation: true,
+            targetWidth: DIMENSION,
+            targetHeight: DIMENSION     
+            
           }
-      
+
           this.camera.getPicture(options).then(imageData=>{
-              console.log(imageData);
-
-          let pic = 'data:image/jpeg;base64,' + imageData;
-          let url:string = "https://ptphpa.000webhostapp.com/register.php";
-         
-          let datapost = new FormData();
-          datapost.append('username',this.registerData.username);
-          datapost.append('firstname',this.registerData.firstName);
-          datapost.append('lastname',this.registerData.lastName);
-          datapost.append('password',this.registerData.password);
-          datapost.append('con_password',this.registerData.con_password);
-          datapost.append('email',this.registerData.email);
-          datapost.append('tel',this.registerData.tel);
-          datapost.append('pic',pic);
-                 
-          
-          let data:Observable<any> =  this.https.post(url,datapost);
-          
-              data.subscribe(res =>{
-              console.log(res);
-              if(res === 'success'){
-                console.log("ok");
-                let nextpage :string = "login";
-                this.page.navigateByUrl(nextpage);
-              }else{
-                this.varidateUsername();
-              }              
-              });
-          console.log("uesr:",this.registerData.username);
-          console.log("ok");
+            let pic = 'data:image/jpeg;base64,' + imageData;
+            //console.log(pic);
+              this.picArray[0] = pic;
+              console.log(this.picArray[0]);
 
 
-          }).catch(err=>{
-            console.log(err);
-          })
+                this.camera.getPicture(options).then(imageData=>{
+                  let pic = 'data:image/jpeg;base64,' + imageData;
+                 // console.log(pic);
+                  this.picArray[1] = pic;
+                  console.log(this.picArray[1]);
 
-          
+                  this.camera.getPicture(options).then(imageData=>{
+                    let pic = 'data:image/jpeg;base64,' + imageData;
+                   // console.log(pic);
+                    this.picArray[2] = pic;
+                    console.log(this.picArray[2]);
+  
+                    this.camera.getPicture(options).then(imageData=>{
+                      let pic = 'data:image/jpeg;base64,' + imageData;
+                     // console.log(pic);
+                      this.picArray[3] = pic;
+                      console.log(this.picArray[3]);
+    
+                      this.camera.getPicture(options).then(imageData=>{
+                        let pic = 'data:image/jpeg;base64,' + imageData;
+                       // console.log(pic);
+                        this.picArray[4] = pic;
+                        console.log(this.picArray[4]);
+      
+      
+                         let url:string = "https://ptphpa.000webhostapp.com/register.php";
+                              
+                        let datapost = new FormData();
+                        datapost.append('username',this.registerData.username);
+                        datapost.append('firstname',this.registerData.firstName);
+                        datapost.append('lastname',this.registerData.lastName);
+                        datapost.append('password',this.registerData.password);
+                        datapost.append('con_password',this.registerData.con_password);
+                        datapost.append('email',this.registerData.email);
+                        datapost.append('tel',this.registerData.tel);
+
+                        for (let index = 0; index<this.picArray.length; index++) {
+                          datapost.append('pic'+index,this.picArray[index]);
+                        }
+                                                          
+                        
+                        let data:Observable<any> =  this.https.post(url,datapost);
+                        
+                            data.subscribe(res =>{
+                            console.log(res);
+                            if(res === 'success'){
+                              console.log("ok");
+                              let nextpage :string = "login";
+                              this.page.navigateByUrl(nextpage);
+                            }else{
+                              this.varidateUsername();
+                            }              
+                            });
+
+                        console.log("uesr:",this.registerData.username);
+                        console.log("ok");
+
+                        
+                      }).catch(err=>{
+                        console.log("Camera issue: " + err);
+                      });
+    
+                      
+                    }).catch(err=>{
+                      console.log("Camera issue: " + err);
+                    });
+  
+                    
+                  }).catch(err=>{
+                    console.log("Camera issue: " + err);
+                  });
+
+
+                }).catch(err=>{
+                  console.log("Camera issue: " + err);
+                });
+
+
+                
+
+            }).catch(err=>{
+              console.log("Camera issue: " + err);
+            });
+
+
+              console.log(this.picArray.length);
+                        
+            for (let index = 0; index<this.picArray.length; index++) {
+                console.log(index);
+                console.log(this.picArray[index]);
+            }         
           
         }else{
           console.log("false");
@@ -84,20 +151,14 @@ export class registerPage {
         }
     
   }
-
+  
   takePhoto(){
-    // const options :CameraOptions = {
-    //   quality: 100,
-    //   destinationType: this.camera.DestinationType.DATA_URL,
-    //   encodingType: this.camera.EncodingType.JPEG,
-    //   mediaType: this.camera.MediaType.PICTURE
-    // }
+    
+   
 
-    // this.camera.getPicture(options).then(value=>{
-    //     console.log(value);
-    // }).catch(err=>{
-    //   console.log(err);
-    // })
+   // for (let index = 0; index<5; index++) {
+        
+  //  }
   }
 
  async passwordComfirm() {
