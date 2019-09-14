@@ -53,29 +53,29 @@ export class registerPage {
               console.log(this.picArray[0]);
 
 
-                this.camera.getPicture(options).then(imageData=>{
-                  let pic = 'data:image/jpeg;base64,' + imageData;
-                 // console.log(pic);
-                  this.picArray[1] = pic;
-                  console.log(this.picArray[1]);
+                // this.camera.getPicture(options).then(imageData=>{
+                //   let pic = 'data:image/jpeg;base64,' + imageData;
+                //  // console.log(pic);
+                //   this.picArray[1] = pic;
+                //   console.log(this.picArray[1]);
 
-                  this.camera.getPicture(options).then(imageData=>{
-                    let pic = 'data:image/jpeg;base64,' + imageData;
-                   // console.log(pic);
-                    this.picArray[2] = pic;
-                    console.log(this.picArray[2]);
+                //   this.camera.getPicture(options).then(imageData=>{
+                //     let pic = 'data:image/jpeg;base64,' + imageData;
+                //    // console.log(pic);
+                //     this.picArray[2] = pic;
+                //     console.log(this.picArray[2]);
   
-                    this.camera.getPicture(options).then(imageData=>{
-                      let pic = 'data:image/jpeg;base64,' + imageData;
-                     // console.log(pic);
-                      this.picArray[3] = pic;
-                      console.log(this.picArray[3]);
+                //     this.camera.getPicture(options).then(imageData=>{
+                //       let pic = 'data:image/jpeg;base64,' + imageData;
+                //      // console.log(pic);
+                //       this.picArray[3] = pic;
+                //       console.log(this.picArray[3]);
     
-                      this.camera.getPicture(options).then(imageData=>{
-                        let pic = 'data:image/jpeg;base64,' + imageData;
-                       // console.log(pic);
-                        this.picArray[4] = pic;
-                        console.log(this.picArray[4]);
+                //       this.camera.getPicture(options).then(imageData=>{
+                //         let pic = 'data:image/jpeg;base64,' + imageData;
+                //        // console.log(pic);
+                //         this.picArray[4] = pic;
+                //         console.log(this.picArray[4]);
       
       
                          let url:string = "https://ptphpa.000webhostapp.com/register.php";
@@ -111,27 +111,25 @@ export class registerPage {
                         console.log("ok");
 
                         
-                      }).catch(err=>{
-                        console.log("Camera issue: " + err);
-                      });
+                //       }).catch(err=>{
+                //         console.log("Camera issue: " + err);
+                //       });
     
                       
-                    }).catch(err=>{
-                      console.log("Camera issue: " + err);
-                    });
+                //     }).catch(err=>{
+                //       console.log("Camera issue: " + err);
+                //     });
   
                     
-                  }).catch(err=>{
-                    console.log("Camera issue: " + err);
-                  });
+                //   }).catch(err=>{
+                //     console.log("Camera issue: " + err);
+                //   });
 
 
-                }).catch(err=>{
-                  console.log("Camera issue: " + err);
-                });
+                // }).catch(err=>{
+                //   console.log("Camera issue: " + err);
+                // });
 
-
-                
 
             }).catch(err=>{
               console.log("Camera issue: " + err);
