@@ -34,7 +34,7 @@ export class registerPage {
           console.log("email",this.registerData.email);
           console.log("tel",this.registerData.tel);
 
-          let DIMENSION = 100;
+          let DIMENSION = 1000;
           const options :CameraOptions = {
             quality: 100,
             destinationType: this.camera.DestinationType.DATA_URL,
