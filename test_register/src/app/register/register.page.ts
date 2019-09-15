@@ -40,7 +40,7 @@ export class registerPage {
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE,
-            correctOrientation: true,
+            correctOrientation: false,
             targetWidth: DIMENSION,
             targetHeight: DIMENSION     
             
