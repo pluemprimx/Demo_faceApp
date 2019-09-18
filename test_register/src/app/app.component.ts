@@ -24,6 +24,11 @@ export class AppComponent {
       title: 'Log in',
       url: '/login',
       icon: 'log-in'
+    },
+    {
+      title: 'Cart',
+      url: '/cart',
+      icon: 'cart'
     }
   ];
 
