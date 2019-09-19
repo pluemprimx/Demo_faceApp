@@ -34,6 +34,11 @@ export class AppComponent {
       title: 'Product',
       url: '/product',
       icon: 'book'
+    },
+    {
+      title: 'Add Product',
+      url: '/addproduct',
+      icon: 'add'
     }
   ];
 

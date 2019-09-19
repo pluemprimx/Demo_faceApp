@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="/product"></ion-back-button>
+        </ion-buttons>
+    <ion-title>addproduct</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <form #form="ngForm" (ngSubmit)="addproduct(form)">
+  <ion-list lines="full" class="ion-no-margin ion-no-padding">
+
+    <!-- <ion-input required type="number" name="shopId" id="shopId" value='1' [(ngModel)]="productData.shopId" ></ion-input> -->
+     
+    <ion-item>
+        <ion-label position="stacked">Barcode<ion-text color="danger">*</ion-text></ion-label>
+        <ion-button (click)="scanCode()" slot="end">
+            Scan Code
+          </ion-button>
+        <ion-input required type="text" name="barcode" id="barcode" minlength="3" value="{{barcode}}" [(ngModel)]="productData.barcode" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label position="stacked">Product Name <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="text"  name="productName" id="productName"  [(ngModel)]="productData.productName" ></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label position="stacked">Price <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="number"  name="price" id="price"[(ngModel)]="productData.price" ></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label position="stacked">Quantity <ion-text color="danger">*</ion-text></ion-label>
+            <ion-input required type="number"  name="qty" id="qty"  [(ngModel)]="productData.qty" ></ion-input>
+          </ion-item>
+
+  </ion-list>
+
+  <div class="ion-padding">
+      <ion-button expand="block" type="submit" class="button" [disabled]="form.invalid">add product</ion-button>
+    </div>
+</form>
+    <!-- <div *ngIf="checkLogin != false; else elseBlock"> </div>
+    <ng-template #elseBlock>Username or Password is incorrect!</ng-template> -->
+    
+</ion-content>
