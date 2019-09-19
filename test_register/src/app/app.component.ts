@@ -29,6 +29,11 @@ export class AppComponent {
       title: 'Cart',
       url: '/cart',
       icon: 'cart'
+    },
+    {
+      title: 'Product',
+      url: '/product',
+      icon: 'book'
     }
   ];
 

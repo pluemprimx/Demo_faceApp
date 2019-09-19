@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+    <div *ngFor="let product of products">
+        <ion-card>
+            <ion-card-content style="color: black">
+         รหัสสินค้า : <b>{{ product["barcode"] }}</b><br>
+         ชื่อสินค้า :  <b>{{ product["productName"] }}</b><br>
+         ราคา :  <b>{{ product["price"] }}</b><br>
+         จำนวน : <b>{{ product["qty"] }}</b><br>
+              </ion-card-content>
+        </ion-card>
+    </div>
+
+</ion-content>
