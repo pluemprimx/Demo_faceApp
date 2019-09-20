@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ToastController , AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-product',
@@ -11,10 +12,16 @@ export class ProductPage implements OnInit {
 
   shopId:any = 1;
   products:any= [];
-  constructor(public https:HttpClient) { }
+  deleteProductData:any = {};
+  barcode:any;
+  constructor(
+    public https:HttpClient,
+    public alertController: AlertController,
+    public toastController: ToastController
+    ) { }
 
   getProduct(){
-    let  url = "http://localhost/test_demoface/selectProduct.php"
+    let  url = "https://ptphpa.000webhostapp.com/selectProduct.php"
         
     let datapost = new FormData();
     datapost.append('shopId',this.shopId);
@@ -29,27 +36,77 @@ export class ProductPage implements OnInit {
             for (let index = 0; index < productData.length; index++) {
               this.products[index] = productData[index];
             }
-          
-  
-      //   console.log(res[0].username);
-      //   console.log(res[0].password);
-      //   this.datapass.loginData = res;
-      //   this.datapass.username = res[0].username;
-      //   this.datapass.firstname = res[0].firstname;
-      //   this.datapass.lastname = res[0].lastname;
-      //   this.datapass.pic = res[0].pic0;
-      //   let nextpage :string = "home";
-      //   this.page.navigateByUrl(nextpage);
+
        }else{
-       // this.checkLogin();
        console.log(false);
        }        
       } );
     }
   
+    deleteProduct(productData){
+      let  url = "https://ptphpa.000webhostapp.com/deleteProduct.php"
+      let datapost = new FormData();
+      console.log(productData.shopId);
+      console.log(productData.barcode);
+
+      datapost.append('shopId',productData.shopId);
+      datapost.append('barcode',productData.barcode);
+
+      let data:Observable<any> =  this.https.post(url,datapost);
+    data.subscribe(deleteProductData =>{
+      console.log(deleteProductData);
+          if(deleteProductData != "error"){
+            console.log("ok")
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+            
+       }else{
+       console.log(false);
+       }        
+      } );
+
+    }
 
   ionViewWillEnter() {
     this.getProduct();
+    
+}
+
+
+async confrimDelete(productData) {
+  
+    const alert = await this.alertController.create({
+      header: 'Confrim Delete!',
+      subHeader: 'You want to delete a product?',
+      message: '" '+productData.productName+' "' ,
+      buttons:  [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('No');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.deleteProduct(productData);
+            this.presentToast(productData);
+          }
+        }
+      ]
+    });
+    await alert.present();
+    
+}
+
+async presentToast(productData) {
+  const toast = await this.toastController.create({
+    message: productData.productName+' is deleted',
+    duration: 2000
+  });
+  toast.present();
 }
 
   ngOnInit() {
