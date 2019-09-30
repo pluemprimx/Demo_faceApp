@@ -39,6 +39,11 @@ export class AppComponent {
       title: 'Add Product',
       url: '/addproduct',
       icon: 'add'
+    },
+    {
+      title: 'face',
+      url: '/face',
+      icon: 'qr-scanner'
     }
   ];
 

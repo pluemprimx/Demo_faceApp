@@ -10,11 +10,13 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule } from '@angular/common/http';
+
 import { DatapassService } from './datapass.service';
 //import { HTTP } from '@ionic-native/http/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { FormsModule } from '@angular/forms';
+//import { request } from 'http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,7 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     FormsModule
+   // Request
   ],
   providers: [
     StatusBar,

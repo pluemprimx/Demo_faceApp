@@ -27,7 +27,8 @@ const routes: Routes = [
   },
   { path: 'cart', loadChildren: './cart/cart.module#CartPageModule' },
   { path: 'product', loadChildren: './product/product.module#ProductPageModule' },
-  { path: 'addproduct', loadChildren: './addproduct/addproduct.module#AddproductPageModule' }
+  { path: 'addproduct', loadChildren: './addproduct/addproduct.module#AddproductPageModule' },
+  { path: 'face', loadChildren: './face/face.module#FacePageModule' }
 ];
 
 
