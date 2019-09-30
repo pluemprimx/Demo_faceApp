@@ -6,4 +6,17 @@
 
 <ion-content>
 <ion-button (click)="takephoto()">take photo</ion-button>
+{{ facedata }}
+
+<div *ngFor="let facedata of facedatas">
+  
+      
+        <ion-label>
+          faceId : {{ facedata["faceId"] }}<br>
+          gender :  {{ faceAttributes["gender"] }}<br>
+          age : {{ faceAttributes["age"] }}<br>
+          <ion-img class="profile" src="{{faceImg}}"></ion-img>
+            
+        </ion-label>
+</div>
 </ion-content>

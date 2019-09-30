@@ -17,6 +17,8 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { FormsModule } from '@angular/forms';
 //import { request } from 'http';
+import { FileTransfer} from '@ionic-native/file-transfer/ngx';
+//import { File } from '@ionic-native/file';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,14 +29,14 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     FormsModule
-   // Request
+   
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    BarcodeScanner,
+    BarcodeScanner,FileTransfer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    DatapassService,Camera
+    DatapassService,Camera,
   ],
   bootstrap: [AppComponent]
 })
