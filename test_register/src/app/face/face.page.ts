@@ -18,7 +18,7 @@ export class FacePage implements OnInit {
  
    private url ='https://ptphpa.000webhostapp.com/face.php'
   //  'use strict';
-  imageUrl ='https://upload.wikimedia.org/wikipedia/commons/3/37/Dagestani_man_and_woman.jpg';
+  //imageUrl ='https://upload.wikimedia.org/wikipedia/commons/3/37/Dagestani_man_and_woman.jpg';
   myphoto:any;
   facedatas:any;
   faceAttributes:any;
