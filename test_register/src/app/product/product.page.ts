@@ -21,7 +21,7 @@ export class ProductPage implements OnInit {
     ) { }
 
   getProduct(){
-    let  url = "http://10.199.66.52/Facepay/selectProduct.php"
+    let  url = "https://ptphpa.000webhostapp.com/selectProduct.php"
         
     let datapost = new FormData();
     datapost.append('shopId',this.shopId);
@@ -44,7 +44,7 @@ export class ProductPage implements OnInit {
     }
   
     deleteProduct(productData){
-      let  url = "http://10.199.66.52/Facepay/deleteProduct.php"
+      let  url = "https://ptphpa.000webhostapp.com/deleteProduct.php"
       let datapost = new FormData();
       console.log(productData.shopId);
       console.log(productData.barcode);

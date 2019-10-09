@@ -42,7 +42,7 @@ export class AddproductPage implements OnInit {
        console.log("shopId:",this.shopId);
        console.log("barcode:",this.productData.barcode);
      
-       let url:string = "http://10.199.66.52/Facepay/addproduct.php";
+       let url:string = "https://ptphpa.000webhostapp.com/addproduct.php";
      
        let datapost = new FormData();
        datapost.append('shopId',this.shopId);

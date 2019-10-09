@@ -78,7 +78,7 @@ export class registerPage {
                 //         console.log(this.picArray[4]);
       
       
-                         let url:string = "http://10.199.66.52/Facepay/register.php";
+                         let url:string = "https://ptphpa.000webhostapp.com/register.php";
                               
                         let datapost = new FormData();
                         datapost.append('username',this.registerData.username);

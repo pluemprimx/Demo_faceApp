@@ -49,7 +49,7 @@ login(){
  // console.log("uesr:",this.loginData.username);
  // console.log("password:",this.loginData.password);
 
-  let url:string = "http://10.199.66.52/Facepay/login.php";
+  let url:string = "https://ptphpa.000webhostapp.com/login.php";
 
   let datapost = new FormData();
   datapost.append('username',this.loginData.username);
