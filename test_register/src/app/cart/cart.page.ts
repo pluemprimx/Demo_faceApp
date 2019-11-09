@@ -25,6 +25,7 @@ export class CartPage implements OnInit {
   ProductDataUpdate:any = [];
   index1:number = 0;
   isExsit:Boolean;
+  cost:number = 0;
   constructor(public https:HttpClient,public alertController: AlertController,private barcodeScanner: BarcodeScanner) { 
     this.encodeData = "https://www.FreakyJolly.com";
     //Options
@@ -70,17 +71,25 @@ export class CartPage implements OnInit {
          if(res != "error"){
           console.log("ok");
          console.log(res[0].barcode);
-         
+
          
           if(this.thisProductData[this.index-1] == null){
             this.thisProductData[this.index] = res[0];
             this.thisProductData[this.index].productQty = this.productQty;
+            this.thisProductData[this.index].cost = this.thisProductData[this.index].price*this.thisProductData[this.index].productQty;
+            
+            console.log(this.thisProductData[this.index].price);
+            console.log(this.thisProductData[this.index].cost);
             this.index = this.index + 1 ;
           }else{
           
             for (let index = 0; index<this.thisProductData.length; index++) {
               if(res[0].barcode == this.thisProductData[index].barcode){
                 this.thisProductData[index].productQty = this.thisProductData[index].productQty + 1;
+                this.thisProductData[index].cost = this.thisProductData[index].price*this.thisProductData[index].productQty;
+               
+                console.log(this.thisProductData[index].price);
+                console.log(this.thisProductData[index].cost);
                 this.isExsit = true;
                 break;
               }else {
@@ -91,13 +100,21 @@ export class CartPage implements OnInit {
             if(this.isExsit==false){
             this.thisProductData[this.index] = res[0];
             this.thisProductData[this.index].productQty = this.productQty;
+            this.thisProductData[this.index].cost = this.thisProductData[this.index].price*this.thisProductData[this.index].productQty;
+            console.log(this.thisProductData[this.index].price);
+            console.log(this.thisProductData[this.index].cost);
             this.index = this.index + 1 ;
             this.isExsit = true;
             }
 
           }
-         
-        
+          let cost = 0;
+          for (let index = 0; index<this.thisProductData.length; index++) { 
+            cost = cost + this.thisProductData[index].cost;
+            
+          }
+          this.cost = cost;
+          console.log(this.cost);
         //  this.thisProductData[this.index] = res[0];
         //  this.thisProductData[this.index].productQty = this.productQty;
          
