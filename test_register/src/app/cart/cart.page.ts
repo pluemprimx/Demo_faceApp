@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {
   BarcodeScannerOptions,
   BarcodeScanner
@@ -26,6 +26,7 @@ export class CartPage implements OnInit {
   index1:number = 0;
   isExsit:Boolean;
   cost:number = 0;
+  custumer:any;
   constructor(public https:HttpClient,public alertController: AlertController,private barcodeScanner: BarcodeScanner) { 
     this.encodeData = "https://www.FreakyJolly.com";
     //Options
@@ -68,7 +69,7 @@ export class CartPage implements OnInit {
       let data:Observable<any> =  this.https.post(url,datapost);
       data.subscribe(res =>{
         console.log(res);
-         if(res != "error"){
+         if(res != null){
           console.log("ok");
          console.log(res[0].barcode);
 
@@ -111,8 +112,7 @@ export class CartPage implements OnInit {
           let cost = 0;
           for (let index = 0; index<this.thisProductData.length; index++) { 
             cost = cost + this.thisProductData[index].cost;
-            
-          }
+             }
           this.cost = cost;
           console.log(this.cost);
         //  this.thisProductData[this.index] = res[0];
@@ -146,7 +146,13 @@ export class CartPage implements OnInit {
       }
  }
 
+ comfrimOrder(){
+  this.enterAccount();     
+ }
 
+ comfrimOrder2(custumer){
+    console.log(custumer);  
+ }
 
  ionViewWillEnter(){
  }
@@ -194,6 +200,39 @@ export class CartPage implements OnInit {
       await alert.present();
     }
     
+  }
+
+  async enterAccount() {
+    const alert = await this.alertController.create({
+      header: 'Cofirm Order',
+      inputs: [
+        {
+          name: 'user',
+          type: 'text',
+          id: 'username',
+          placeholder: 'Enter your Account'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: data => {
+            console.log('Confirm Ok');
+            this.custumer = data.user;
+            //console.log(this.custumer);
+            this.comfrimOrder2(data.user);
+          }
+        }
+      ]
+    });
+    await alert.present();    
   }
 
 
