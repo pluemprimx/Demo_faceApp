@@ -10,5 +10,6 @@ export class DatapassService {
   public lastname;
   public checkLogin;
   public pic;
+  public balance;
   constructor() { }
 }

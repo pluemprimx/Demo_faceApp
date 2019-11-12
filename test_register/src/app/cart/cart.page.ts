@@ -25,8 +25,9 @@ export class CartPage implements OnInit {
   ProductDataUpdate:any = [];
   index1:number = 0;
   isExsit:Boolean;
-  cost:number = 0;
+  cost:any = 0;
   custumer:any;
+  balance:any;
   constructor(public https:HttpClient,public alertController: AlertController,private barcodeScanner: BarcodeScanner) { 
     this.encodeData = "https://www.FreakyJolly.com";
     //Options
@@ -146,13 +147,76 @@ export class CartPage implements OnInit {
       }
  }
 
- comfrimOrder(){
+ confirmOrder(){
   this.enterAccount();     
  }
 
- comfrimOrder2(custumer){
-    console.log(custumer);  
+ confirmOrder2(custumer){
+    console.log(custumer);
+
+     let url:string = "https://ptphpa.000webhostapp.com/checkFace.php";
+      let datapost = new FormData();
+      //datapost.append('shopId',this.shopId);
+      datapost.append('username',custumer);
+    
+      let data:Observable<any> =  this.https.post(url,datapost);
+      data.subscribe(res =>{
+        if(res != null){
+          console.log(res);
+          res[0].password;
+          this.checkPassword(res[0].password,res[0].username,res[0].balance);
+        }else{
+          this.alertUserIncorrect();
+        }
+      });
+
  }
+
+
+ confirmOrder3(custumer,balance){
+  console.log(custumer);
+
+   let url:string = "https://ptphpa.000webhostapp.com/confirmOrder.php";
+    let datapost = new FormData();
+    datapost.append('shopId',this.shopId);
+    datapost.append('customer',custumer);
+    datapost.append('amount',this.cost);
+    
+    
+    let data:Observable<any> =  this.https.post(url,datapost);
+    data.subscribe(res =>{
+      if(res != 'error'){
+        console.log(res);
+       // res[0].password;
+        //this.checkPassword(res[0].password);
+      }else{
+        console.log("error");
+        //this.alertUserIncorrect();
+      }
+    });
+
+    let url2:string = "https://ptphpa.000webhostapp.com/updateBalance.php";
+    let datapost2 = new FormData();
+    this.balance = balance-this.cost;
+    datapost2.append('balance',this.balance);
+    datapost2.append('username',custumer);
+    
+    
+    let data2:Observable<any> =  this.https.post(url2,datapost2);
+    data2.subscribe(res =>{
+      if(res != 'error'){
+        console.log(res);
+        this.alertSuccess();
+       // res[0].password;
+        //this.checkPassword(res[0].password);
+      }else{
+        console.log("error");
+        //this.alertUserIncorrect();
+      }
+    });
+
+
+}
 
  ionViewWillEnter(){
  }
@@ -227,7 +291,12 @@ export class CartPage implements OnInit {
             console.log('Confirm Ok');
             this.custumer = data.user;
             //console.log(this.custumer);
-            this.comfrimOrder2(data.user);
+            if(this.custumer !=null){
+              this.confirmOrder2(data.user);
+            }else{
+              this.alertUserIncorrect();
+            }
+           
           }
         }
       ]
@@ -235,7 +304,83 @@ export class CartPage implements OnInit {
     await alert.present();    
   }
 
+  async checkPassword(password,user,balance) {
+    const alert = await this.alertController.create({
+      header: 'Cofirm Password',
+      inputs: [
+        {
+          name: 'password',
+          type: 'password',
+          id: 'password',
+          placeholder: 'Enter your password'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Cancel');
+            window.location.reload();
+          }
+        }, {
+          text: 'Ok',
+          handler: data => {
+            console.log('Ok');
+            if(password == data.password){
+              console.log("success");
+              this.confirmOrder3(user,balance);
+            }else{
+              console.log("password not compare");
+              this.alertPasswordIncorrect();
+            }
+            //console.log(this.custumer);
+            //this.alertPasswordIncorrect(data.user);
+          }
+        }
+      ]
+    });
+    await alert.present();    
+  }
 
+  async alertPasswordIncorrect() {
+    const alert = await this.alertController.create({
+      header: 'Password Incorrect',
+      //subHeader: 'Subtitle',
+      message: 'Please try again',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async alertUserIncorrect() {
+    const alert = await this.alertController.create({
+      header: 'Username Incorrect',
+      //subHeader: 'Subtitle',
+      message: 'Please try again',
+      buttons: ['Ok']
+    });
+
+    await alert.present();
+  }
+
+  async alertSuccess() {
+    const alert = await this.alertController.create({
+      header: 'Order Complete!',
+      //subHeader: 'Confirm Order Success',
+     // message: 'Please try again',
+     buttons: [{
+      text: 'Ok',
+      handler: () => {
+      window.location.reload();
+      }
+    }]
+    });
+
+    await alert.present();
+  }
   ngOnInit() {
     
   }

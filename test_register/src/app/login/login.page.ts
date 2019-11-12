@@ -67,6 +67,7 @@ login(){
       this.datapass.firstname = res[0].firstname;
       this.datapass.lastname = res[0].lastname;
       this.datapass.pic = res[0].pic0;
+      this.datapass.balance = res[0].balance;
       let nextpage :string = "home";
       this.page.navigateByUrl(nextpage);
      }else{

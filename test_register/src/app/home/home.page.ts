@@ -13,6 +13,7 @@ export class HomePage implements OnInit {
    firstname:any ;
    lastname:any;
    pic:any;
+   balance:any;
   constructor(public https:HttpClient,private datapass :DatapassService) {}
 
   
@@ -22,6 +23,7 @@ ngOnInit():void{
   this.firstname = this.datapass.firstname;
   this.lastname = this.datapass.lastname;
   this.pic = this.datapass.pic;
+  this.balance = this.datapass.balance;
   console.log(this.userData);
 }
   
