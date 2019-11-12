@@ -48,7 +48,8 @@ export class registerPage {
 
           this.camera.getPicture(options).then(imageData=>{
             let pic = 'data:image/jpeg;base64,' + imageData;
-            //console.log(pic);
+            //let pic = imageData.FILE_URI;
+            console.log(pic);
               this.picArray[0] = pic;
               console.log(this.picArray[0]);
 
@@ -88,6 +89,7 @@ export class registerPage {
                         datapost.append('con_password',this.registerData.con_password);
                         datapost.append('email',this.registerData.email);
                         datapost.append('tel',this.registerData.tel);
+                        
 
                         for (let index = 0; index<this.picArray.length; index++) {
                           datapost.append('pic'+index,this.picArray[index]);
@@ -110,7 +112,36 @@ export class registerPage {
                         console.log("uesr:",this.registerData.username);
                         console.log("ok");
 
+                       
+                        // let urlTrain:string = "http://10.51.102.23/api/train ";
+                              
+                        // let datapostTrain = new FormData();
+                        // datapostTrain.append('name',this.registerData.username);
+                                                
+
+                        // for (let index = 0; index<this.picArray.length; index++) {
+                        //   datapostTrain.append('file',this.picArray[index]);
+                        // }
+                                                          
                         
+                        // let dataTrain:Observable<any> =  this.https.post(urlTrain,datapostTrain);
+                        
+                        // dataTrain.subscribe(res =>{
+                        //     console.log("train");
+                        //     console.log(res);
+                            
+                        //     if(res === 'success'){
+                        //       console.log("ok");
+                        //       let nextpage :string = "login";
+                        //       this.page.navigateByUrl(nextpage);
+                        //     }else{
+                        //       this.varidateUsername();
+                        //     }              
+                        //     });ํ
+
+                        //console.log("uesr:",this.registerData.username);
+                       
+
                 //       }).catch(err=>{
                 //         console.log("Camera issue: " + err);
                 //       });

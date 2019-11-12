@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file';
-import { NavController, LoadingController } from '@ionic/angular';
+import {  LoadingController } from '@ionic/angular';
+import {  AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class FacePage implements OnInit {
   faceAttributes:any;
   faceImg:string;
   //apikey = '13935fbd64eb48c1b6db2ad3b1d48570';
-   constructor(public navCtrl: NavController, private loadingCtrl:LoadingController,private http:HttpClient,private camera: Camera,private transfer: FileTransfer) { }
+   constructor(public alertController: AlertController,private http:HttpClient,private camera: Camera,private transfer: FileTransfer) { }
  
     
    takephoto(){
@@ -108,11 +109,33 @@ export class FacePage implements OnInit {
         });
 
 
-          alert("Success");
+          this.alertSuccess();
         }, (err) => {
           console.log(err);
-          alert("Error");
+          this.alertError();
         });
+    }
+
+    async alertSuccess() {
+      const alert = await this.alertController.create({
+        header: 'Success',
+        //subHeader: 'Subtitle',
+        //message: 'Please try again',
+        buttons: ['Ok']
+      });
+  
+      await alert.present();
+    }
+
+    async alertError() {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        //subHeader: 'Subtitle',
+        //message: 'Please try again',
+        buttons: ['Ok']
+      });
+  
+      await alert.present();
     }
 
   ngOnInit() {
