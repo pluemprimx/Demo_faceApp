@@ -30,9 +30,12 @@
     Username : {{username}}<br>
     Name : {{firstname}} {{lastname}}<br>
     Balance : {{balance}} Bath
-    </ion-card-content>
-    
+    </ion-card-content> 
   </ion-card>
+  <ion-button color="danger" expand="block" fill="outline" (click)="logout()">
+    <ion-icon name="log-out"></ion-icon>
+    log out
+  </ion-button>
   </div >
 
   <ng-template #elseBlock >

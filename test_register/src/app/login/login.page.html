@@ -32,5 +32,9 @@
 </form>
     <div *ngIf="checkLogin != false; else elseBlock"> </div>
     <ng-template #elseBlock>Username or Password is incorrect!</ng-template>
-    
+    <p style="text-align: center">or</p>
+    <ion-button color="success" expand="block" routerLink="/register" routerDirection="root">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      Register
+    </ion-button>
 </ion-content>

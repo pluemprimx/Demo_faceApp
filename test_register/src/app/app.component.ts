@@ -15,36 +15,38 @@ export class AppComponent {
       title: 'Home',
       url: '/home',
       icon: 'home'
-    },{
-      title: 'Register',
-      url: '/register',
-      icon: 'create'
     },
-    {
-      title: 'Log in',
-      url: '/login',
-      icon: 'log-in'
-    },
-    {
-      title: 'Cart',
-      url: '/cart',
-      icon: 'cart'
-    },
+    // {
+    //   title: 'Register',
+    //   url: '/register',
+    //   icon: 'create'
+    // },
+    // {
+    //   title: 'Log in',
+    //   url: '/login',
+    //   icon: 'log-in'
+    // },
     {
       title: 'Product',
       url: '/product',
       icon: 'book'
     },
     {
-      title: 'Add Product',
-      url: '/addproduct',
-      icon: 'add'
-    },
-    {
-      title: 'face',
-      url: '/face',
-      icon: 'qr-scanner'
+      title: 'Cart',
+      url: '/cart',
+      icon: 'cart'
     }
+    
+    // {
+    //   title: 'Add Product',
+    //   url: '/addproduct',
+    //   icon: 'add'
+    // },
+    // {
+    //   title: 'face',
+    //   url: '/face',
+    //   icon: 'qr-scanner'
+    // }
   ];
 
   constructor(

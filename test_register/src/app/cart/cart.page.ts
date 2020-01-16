@@ -61,7 +61,7 @@ export class CartPage implements OnInit {
     if(this.cartData.barcode != ""){
       console.log("barcode:",this.cartData.barcode);
     
-      let url:string = "https://ptphpa.000webhostapp.com/checkProduct.php";
+      let url:string = "http://primx.online/checkProduct.php";
     
       let datapost = new FormData();
       datapost.append('shopId',this.shopId);
@@ -154,7 +154,7 @@ export class CartPage implements OnInit {
  confirmOrder2(custumer){
     console.log(custumer);
 
-     let url:string = "https://ptphpa.000webhostapp.com/checkFace.php";
+     let url:string = "http://primx.online/checkFace.php";
       let datapost = new FormData();
       //datapost.append('shopId',this.shopId);
       datapost.append('username',custumer);
@@ -176,7 +176,7 @@ export class CartPage implements OnInit {
  confirmOrder3(custumer,balance){
   console.log(custumer);
 
-   let url:string = "https://ptphpa.000webhostapp.com/confirmOrder.php";
+   let url:string = "http://primx.online/confirmOrder.php";
     let datapost = new FormData();
     datapost.append('shopId',this.shopId);
     datapost.append('customer',custumer);
@@ -195,7 +195,7 @@ export class CartPage implements OnInit {
       }
     });
 
-    let url2:string = "https://ptphpa.000webhostapp.com/updateBalance.php";
+    let url2:string = "http://primx.online/updateBalance.php";
     let datapost2 = new FormData();
     this.balance = balance-this.cost;
     datapost2.append('balance',this.balance);
