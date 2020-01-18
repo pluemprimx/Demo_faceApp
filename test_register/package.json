@@ -38,6 +38,8 @@
     "cordova-plugin-file-transfer": "1.7.1",
     "core-js": "^2.5.4",
     "ionic": "^4.12.0",
+    "omise": "^0.6.0",
+    "omise-react-native": "0.0.8",
     "phonegap-plugin-barcodescanner": "8.1.0",
     "request": "^2.88.0",
     "rxjs": "~6.5.1",

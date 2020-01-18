@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DatapassService } from '../datapass.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  userData;
+   userData:any;
    username:any;
    firstname:any ;
    lastname:any;
@@ -24,15 +25,32 @@ export class HomePage implements OnInit {
 ngOnInit():void{
   if (sessionStorage.getItem("username")!=null) {
 
-    console.log(sessionStorage.getItem("firstname"));
-    this.userData = this.datapass.loginData;
-  //this.username = this.datapass.username;
-  this.username = sessionStorage.getItem("username");
-  this.firstname = sessionStorage.getItem("firstname");
-  this.lastname = sessionStorage.getItem("lastname");
-  this.pic = sessionStorage.getItem("pic");
-  this.balance = sessionStorage.getItem("balance");
-  console.log(this.userData);
+
+    let url:string = "http://primx.online/selectUserData.php";
+
+    let datapost = new FormData();
+    datapost.append('username',sessionStorage.getItem("username"));
+    //datapost.append('password',this.userData.password);
+  
+    let data:Observable<any> =  this.https.post(url,datapost);
+    data.subscribe(res =>{
+      console.log(res);
+      this.username = res[0].username;
+      this.firstname = res[0].firstname;
+      this.lastname = res[0].lastname;
+      this.pic = res[0].pic0;
+      this.balance = res[0].balance;
+    }
+    );
+ //   console.log(sessionStorage.getItem("firstname"));
+  //   this.userData = this.datapass.loginData;
+  // //this.username = this.datapass.username;
+  // this.username = sessionStorage.getItem("username");
+  // this.firstname = sessionStorage.getItem("firstname");
+  // this.lastname = sessionStorage.getItem("lastname");
+  // this.pic = sessionStorage.getItem("pic");
+  // this.balance = sessionStorage.getItem("balance");
+  //console.log(this.userData);
 
   }else{
     let nextpage :string = "login";

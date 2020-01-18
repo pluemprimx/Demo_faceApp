@@ -6,6 +6,8 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NavController, AlertController } from '@ionic/angular';
+import Omise from 'omise-react-native';
+Omise.config('pkey_test_5ilqmzh9rqew4gmwdr3', '2015-11-17');
 
 @Component({
   selector: 'app-cart',
@@ -28,6 +30,8 @@ export class CartPage implements OnInit {
   cost:any = 0;
   custumer:any;
   balance:any;
+  token:any = {};
+ 
   constructor(public https:HttpClient,public alertController: AlertController,private barcodeScanner: BarcodeScanner) { 
     this.encodeData = "https://www.FreakyJolly.com";
     //Options
@@ -37,6 +41,7 @@ export class CartPage implements OnInit {
     };
   }
   
+ 
   scanCode() {
     this.barcodeScanner
       .scan()
@@ -73,27 +78,37 @@ export class CartPage implements OnInit {
          if(res != null){
           console.log("ok");
          console.log(res[0].barcode);
-
-         
+         console.log(res[0].qty);
+         let countQty = res[0].qty;
+         if (countQty!=0) { //if check qty
+           
+                  
           if(this.thisProductData[this.index-1] == null){
             this.thisProductData[this.index] = res[0];
             this.thisProductData[this.index].productQty = this.productQty;
             this.thisProductData[this.index].cost = this.thisProductData[this.index].price*this.thisProductData[this.index].productQty;
             
-            console.log(this.thisProductData[this.index].price);
+            console.log(this.thisProductData[this.index].productQty);
             console.log(this.thisProductData[this.index].cost);
             this.index = this.index + 1 ;
           }else{
           
             for (let index = 0; index<this.thisProductData.length; index++) {
               if(res[0].barcode == this.thisProductData[index].barcode){
-                this.thisProductData[index].productQty = this.thisProductData[index].productQty + 1;
-                this.thisProductData[index].cost = this.thisProductData[index].price*this.thisProductData[index].productQty;
+                if (countQty-this.thisProductData[index].productQty!=0) {
+                  this.thisProductData[index].productQty = this.thisProductData[index].productQty + 1;
+                  this.thisProductData[index].cost = this.thisProductData[index].price*this.thisProductData[index].productQty;
                
-                console.log(this.thisProductData[index].price);
-                console.log(this.thisProductData[index].cost);
-                this.isExsit = true;
-                break;
+                  console.log(this.thisProductData[index].productQty);
+                  console.log(this.thisProductData[index].cost);
+                  this.isExsit = true;
+                  break;
+
+                } else {
+                  this.alertCheckQty();
+                  break;
+                }
+                
               }else {
                 this.isExsit = false;
               }
@@ -103,7 +118,8 @@ export class CartPage implements OnInit {
             this.thisProductData[this.index] = res[0];
             this.thisProductData[this.index].productQty = this.productQty;
             this.thisProductData[this.index].cost = this.thisProductData[this.index].price*this.thisProductData[this.index].productQty;
-            console.log(this.thisProductData[this.index].price);
+
+            console.log(this.thisProductData[this.index].productQty);
             console.log(this.thisProductData[this.index].cost);
             this.index = this.index + 1 ;
             this.isExsit = true;
@@ -114,6 +130,7 @@ export class CartPage implements OnInit {
           for (let index = 0; index<this.thisProductData.length; index++) { 
             cost = cost + this.thisProductData[index].cost;
              }
+
           this.cost = cost;
           console.log(this.cost);
         //  this.thisProductData[this.index] = res[0];
@@ -138,6 +155,11 @@ export class CartPage implements OnInit {
            console.log(false);
            this.status(false);
          }
+
+        } else {//else check qty
+          this.alertCheckQty();
+          
+        }
                   
         });
         
@@ -147,8 +169,13 @@ export class CartPage implements OnInit {
       }
  }
 
+ 
+
  confirmOrder(){
-  this.enterAccount();     
+  this.enterAccount();
+  this.testOmise();
+  // console.log(this.token.id);
+  // console.log('ราคารวม : '+this.cost);
  }
 
  confirmOrder2(custumer){
@@ -381,8 +408,53 @@ export class CartPage implements OnInit {
 
     await alert.present();
   }
+
+  async alertCheckQty() {
+    const alert = await this.alertController.create({
+      header: 'Product not enough',
+      //subHeader: 'Subtitle',
+      message: 'Please try again',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
   ngOnInit() {
     
   }
+
+  
+  async testOmise() {
+    this.token = await Omise.createToken({
+        'card': {
+            'name': 'JOHN DOE',
+            'city': 'Bangkok',
+            'postal_code': 10320,
+            'number': '4242424242424242',
+            'expiration_month': 10,
+            'expiration_year': 2020,
+            'security_code': 123
+        }
+    });
+    //this.token.id = data.id;
+    //console.log('token : '+data.id);
+    console.log(this.token.id);
+    console.log('ราคารวม : '+this.cost+'00');
+
+    let url:string = "http://primx.online/checkout.php";
+    let datapost = new FormData();
+    datapost.append('omiseToken',this.token.id);
+    datapost.append('cost',this.cost+'00');
+    
+    let data:Observable<any> =  this.https.post(url,datapost);
+    data.subscribe(res =>{
+      console.log(res);
+
+    });
+
+    }
+
+
+
 
 }
