@@ -29,7 +29,9 @@ const routes: Routes = [
   { path: 'product', loadChildren: './product/product.module#ProductPageModule' },
   { path: 'addproduct', loadChildren: './addproduct/addproduct.module#AddproductPageModule' },
   { path: 'face', loadChildren: './face/face.module#FacePageModule' },
-  { path: 'topup', loadChildren: './topup/topup.module#TopupPageModule' }
+  { path: 'topup', loadChildren: './topup/topup.module#TopupPageModule' },
+  { path: 'history', loadChildren: './history/history.module#HistoryPageModule' },
+  { path: 'historydetail', loadChildren: './historydetail/historydetail.module#HistorydetailPageModule' }
 ];
 
 

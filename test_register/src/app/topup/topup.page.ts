@@ -25,9 +25,7 @@ export class TopupPage implements OnInit {
   username:any = sessionStorage.getItem("username");
   balance:any;
   ngOnInit() {
-    if (sessionStorage.getItem("username")!=null) {
-
-    }else{
+    if (sessionStorage.getItem("username")==null) {
       let nextpage :string = "login";
       this.page.navigateByUrl(nextpage);
       console.log("next is worked");

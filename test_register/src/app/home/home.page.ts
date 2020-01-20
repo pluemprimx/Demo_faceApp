@@ -62,11 +62,35 @@ ngOnInit():void{
   
 }
 
+history(){
+  let nextpage :string = "history";
+    this.page.navigateByUrl(nextpage);
+    console.log("history is worked");
+}
+
 logout(){
   sessionStorage.removeItem("username");
   console.log("logout is worked");
   //window.location.reload();
   this.ngOnInit();
+}
+
+goProduct(){
+  let nextpage :string = "product";
+    this.page.navigateByUrl(nextpage);
+    console.log("goProduct is worked");
+}
+
+goTopup(){
+  let nextpage :string = "topup";
+    this.page.navigateByUrl(nextpage);
+    console.log("goTopup is worked");
+}
+
+goCart(){
+  let nextpage :string = "cart";
+    this.page.navigateByUrl(nextpage);
+    console.log("goCart is worked");
 }
 
 }

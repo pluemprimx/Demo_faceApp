@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NavController, AlertController } from '@ionic/angular';
 import Omise from 'omise-react-native';
+import { Router } from '@angular/router';
 Omise.config('pkey_test_5ilqmzh9rqew4gmwdr3', '2015-11-17');
 
 @Component({
@@ -33,7 +34,7 @@ export class CartPage implements OnInit {
   token:any = {};
   finalProductData:any = [];
  
-  constructor(public https:HttpClient,public alertController: AlertController,private barcodeScanner: BarcodeScanner) { 
+  constructor(public https:HttpClient,public alertController: AlertController,private page : Router,private barcodeScanner: BarcodeScanner) { 
     this.encodeData = "https://www.FreakyJolly.com";
     //Options
     this.barcodeScannerOptions = {
@@ -159,7 +160,7 @@ export class CartPage implements OnInit {
         for (let index = 0; index < this.thisProductData.length; index++) {
           this.finalProductData[index] = this.thisProductData[index];
           this.finalProductData[index].updateQty = parseInt(this.thisProductData[index].qty) - parseInt(this.thisProductData[index].productQty);
-          console.log(this.finalProductData[index].updateQty);
+          console.log(this.thisProductData[index]);
         }
 
       } else {//else check qty
@@ -202,7 +203,6 @@ export class CartPage implements OnInit {
       data.subscribe(res =>{
         if(res != null){
           console.log(res);
-          res[0].password;
           this.checkPassword(res[0].password,res[0].username,res[0].balance,this.cost);
         }else{
           this.alertUserIncorrect();
@@ -227,21 +227,46 @@ addOrder(custumer){
   let url:string = "http://primx.online/confirmOrder.php";
   let datapost = new FormData();
   datapost.append('shopId',this.shopId);
+  datapost.append('shop',sessionStorage.getItem("username"));
   datapost.append('customer',custumer);
   datapost.append('amount',this.cost);
   
   
   let data:Observable<any> =  this.https.post(url,datapost);
   data.subscribe(res =>{
-    if(res != 'error'){
-      console.log(res);
-     // res[0].password;
-      //this.checkPassword(res[0].password);
-    }else{
+    if(res != null){
+      console.log(res[0].orderId);
+      let orderId = res[0].orderId;
+     this.addOrderDetail(orderId);
+     }else{
       console.log("error");
-      //this.alertUserIncorrect();
-    }
+    //   //this.alertUserIncorrect();
+     }
   });
+}
+
+addOrderDetail(orderId){
+  for (let index = 0; index < this.thisProductData.length; index++) {
+ 
+  let url:string = "http://primx.online/addOrderDetail.php";
+  let datapost = new FormData();
+  datapost.append('orderId',orderId);
+  datapost.append('barcode',this.thisProductData[index].barcode);
+  datapost.append('qty',this.thisProductData[index].productQty);
+  datapost.append('amount',this.thisProductData[index].cost);
+  console.log("addOrderDetail : "+this.thisProductData[index].barcode);
+  
+  let data:Observable<any> =  this.https.post(url,datapost);
+  data.subscribe(res =>{
+    if(res != null){
+      console.log(res);
+      
+     }else{
+      console.log("error");
+    //   //this.alertUserIncorrect();
+     }
+  });
+}
 }
 
 
@@ -452,7 +477,8 @@ updateProduct(){
             console.log('Ok');
             if(password == data.password){
               console.log("success");
-              let checkbalance = data.balance - data.cost;
+              let checkbalance = parseFloat(balance) - parseFloat(cost);
+              console.log(checkbalance);
               if (checkbalance>=0) {
                 this.confirmOrder3(user,balance);
               } else {
@@ -537,7 +563,11 @@ updateProduct(){
   }
 
   ngOnInit() {
-  
+    if (sessionStorage.getItem("username")==null) {
+      let nextpage :string = "login";
+      this.page.navigateByUrl(nextpage);
+      console.log("next is worked");
+    }
     
   }
 

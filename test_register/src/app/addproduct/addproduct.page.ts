@@ -136,7 +136,12 @@ export class AddproductPage implements OnInit {
   }
 
   ngOnInit() {
-    
+    if (sessionStorage.getItem("username")==null) {
+      let nextpage :string = "login";
+      this.page.navigateByUrl(nextpage);
+      console.log("next is worked");
+    }
+  
   }
 
 }

@@ -11,5 +11,9 @@ export class DatapassService {
   public checkLogin;
   public pic;
   public balance;
+
+  public orderId;
+  public orderStatus;
+
   constructor() { }
 }

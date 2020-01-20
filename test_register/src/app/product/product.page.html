@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
     <ion-title>product</ion-title>
     <ion-button color="success" fill="clear" (click)="addProduct()" slot="end" routerLink="/addproduct" routerDirection="forward"> 
         <ion-icon slot="icon-only" name="add-circle"></ion-icon>

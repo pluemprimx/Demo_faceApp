@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ToastController , AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -17,7 +18,7 @@ export class ProductPage implements OnInit {
   constructor(
     public https:HttpClient,
     public alertController: AlertController,
-    public toastController: ToastController
+    public toastController: ToastController,private page : Router
     ) { }
 
   getProduct(){
@@ -111,7 +112,11 @@ async presentToast(productData) {
 
   ngOnInit() {
 
- 
+    if (sessionStorage.getItem("username")==null) {
+      let nextpage :string = "login";
+      this.page.navigateByUrl(nextpage);
+      console.log("next is worked");
+    }
 }
 
 }
