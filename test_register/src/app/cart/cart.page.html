@@ -14,8 +14,8 @@
       <ion-list lines="full" class="ion-no-margin ion-no-padding">
   <ion-item>
       <ion-label position="stacked">Barcode<ion-text color="danger">*</ion-text></ion-label>
-      <ion-button (click)="scanCode()" slot="end">
-          Scan Code
+      <ion-button (click)="scanCode()" slot="end" size="default">
+        <ion-icon name="barcode"></ion-icon>
         </ion-button>
       <ion-input required type="text" name="barcode" id="barcode" minlength="3" value="{{barcode}}" [(ngModel)]="cartData.barcode" ></ion-input>
   </ion-item>

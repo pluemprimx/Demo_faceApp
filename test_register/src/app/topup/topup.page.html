@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>top up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card style="color: black;">
+  <form #form="ngForm" (ngSubmit)="topup(form)">
+
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+      <ion-item>
+          <ion-label position="stacked">Card number<ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text" name="cardNumber" id="cardNumber" placeholder="Card number"  pattern="[0-9]{16}" minlength="16" title="16 characters" [(ngModel)]="cardData.cardNumber" ></ion-input>
+      </ion-item>
+
+      <ion-item>
+         <ion-label position="stacked">Name on card<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="text" name="name" id="name" placeholder="Name on card" [(ngModel)]="cardData.name" ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+          <ion-label position="stacked">Expiry month<ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="number" name="expiryMonth" id="expiryMonth" placeholder="MM"  pattern="[0-9]{2}" [(ngModel)]="cardData.expiryMonth" ></ion-input>
+             </ion-col>
+             <ion-col>
+          <ion-label position="stacked">Expiry year<ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="number" name="expiryYear" id="expiryYear" placeholder="YYYY"  pattern="[0-9]{4}" [(ngModel)]="cardData.expiryYear" ></ion-input>
+            </ion-col>  
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Security code<ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="Password" name="CVV" id="CVV" placeholder="CVV"  pattern="[0-9]{3}" [(ngModel)]="cardData.CVV"></ion-input>
+        </ion-item>
+        
+    <!-- <ion-list>
+      <ion-list-header>
+          <ion-label>Money<ion-text color="danger">*</ion-text></ion-label>
+          </ion-list-header>
+      <ion-radio-group required  [(ngModel)]="cardData.cost" name="cost" >
+                
+        <ion-item>
+          <ion-grid>
+            <ion-row > 
+               <ion-col style="text-align: center">
+            <ion-button fill="outline" color="Secondary">
+            <ion-label>100</ion-label>
+            <ion-radio slot="start" value="100"  checked></ion-radio>
+            </ion-button>
+               </ion-col>
+               <ion-col style="text-align: center">
+            <ion-button  fill="outline" color="Secondary">
+            <ion-label>300</ion-label>
+            <ion-radio slot="start" value="300"></ion-radio>
+            </ion-button>
+          </ion-col>
+            <ion-col style="text-align: center">
+            <ion-button  fill="outline" color="Secondary">
+            <ion-label>500</ion-label>
+            <ion-radio slot="start" value="500"></ion-radio>
+            </ion-button>
+          </ion-col>
+            <ion-col style="text-align: center">
+            <ion-button  fill="outline" color="Secondary" >
+            <ion-label>1000</ion-label>
+            <ion-radio slot="start" value="1000"></ion-radio>
+            </ion-button>
+          </ion-col>
+            </ion-row>
+          </ion-grid>
+          </ion-item>
+
+        </ion-radio-group>
+      </ion-list> -->
+      <br>
+      <ion-segment required [(ngModel)]="cardData.cost" id="cost" name="cost" color="tertiary" mode="ios">
+        <ion-segment-button value="100" checked>
+         100
+        </ion-segment-button>
+        <ion-segment-button  value="300">
+         300
+        </ion-segment-button>
+        <ion-segment-button value="500">
+         500
+        </ion-segment-button>
+        <ion-segment-button value="1000">
+          1000
+        </ion-segment-button>
+      </ion-segment>
+        <!-- <ion-item>
+          <ion-label position="stacked">Email <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter your email." name="email" id="email" inputmode="email" [(ngModel)]="registerData.email" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Tel <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text" name="tel" id="tel" pattern="[0-9]{10}" title="Please enter your telephone number" [(ngModel)]="registerData.tel"></ion-input>
+        </ion-item> -->
+       
+    </ion-list>
+
+    <div class="ion-padding">
+        <ion-button expand="block" type="submit" class="button" [disabled]="form.invalid" >Top Up</ion-button>
+      </div>
+    </form> 
+    <ion-card-content style="font-size: smaller;">เติมเงินโดยการชำระผ่านบัตรเครดิต/เดบิตโดย Omise Payment หักค่าธรรมเนียมจากผู้ใช้รายการละ 3.65% และไม่มีการจัดเก็บข้อมูลบัตรของท่านไว้ในระบบ FacePay</ion-card-content>
+  </ion-card>
+</ion-content>

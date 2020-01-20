@@ -35,6 +35,11 @@ export class AppComponent {
       title: 'Cart',
       url: '/cart',
       icon: 'cart'
+    },
+    {
+      title: 'Top up',
+      url: '/topup',
+      icon: 'cash'
     }
     
     // {

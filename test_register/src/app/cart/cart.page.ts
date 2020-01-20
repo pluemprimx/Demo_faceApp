@@ -31,6 +31,7 @@ export class CartPage implements OnInit {
   custumer:any;
   balance:any;
   token:any = {};
+  finalProductData:any = [];
  
   constructor(public https:HttpClient,public alertController: AlertController,private barcodeScanner: BarcodeScanner) { 
     this.encodeData = "https://www.FreakyJolly.com";
@@ -75,15 +76,15 @@ export class CartPage implements OnInit {
       let data:Observable<any> =  this.https.post(url,datapost);
       data.subscribe(res =>{
         console.log(res);
-         if(res != null){
+         if(res != "error"&&res != null){
           console.log("ok");
          console.log(res[0].barcode);
          console.log(res[0].qty);
          let countQty = res[0].qty;
          if (countQty!=0) { //if check qty
-           
-                  
+                             
           if(this.thisProductData[this.index-1] == null){
+           
             this.thisProductData[this.index] = res[0];
             this.thisProductData[this.index].productQty = this.productQty;
             this.thisProductData[this.index].cost = this.thisProductData[this.index].price*this.thisProductData[this.index].productQty;
@@ -91,11 +92,13 @@ export class CartPage implements OnInit {
             console.log(this.thisProductData[this.index].productQty);
             console.log(this.thisProductData[this.index].cost);
             this.index = this.index + 1 ;
+
+         
           }else{
           
             for (let index = 0; index<this.thisProductData.length; index++) {
               if(res[0].barcode == this.thisProductData[index].barcode){
-                if (countQty-this.thisProductData[index].productQty!=0) {
+               if (countQty-this.thisProductData[index].productQty!=0) {
                   this.thisProductData[index].productQty = this.thisProductData[index].productQty + 1;
                   this.thisProductData[index].cost = this.thisProductData[index].price*this.thisProductData[index].productQty;
                
@@ -106,15 +109,18 @@ export class CartPage implements OnInit {
 
                 } else {
                   this.alertCheckQty();
+                  this.isExsit = true;
                   break;
-                }
-                
+                }              
               }else {
                 this.isExsit = false;
               }
+
+            
             }
 
             if(this.isExsit==false){
+              
             this.thisProductData[this.index] = res[0];
             this.thisProductData[this.index].productQty = this.productQty;
             this.thisProductData[this.index].cost = this.thisProductData[this.index].price*this.thisProductData[this.index].productQty;
@@ -123,6 +129,7 @@ export class CartPage implements OnInit {
             console.log(this.thisProductData[this.index].cost);
             this.index = this.index + 1 ;
             this.isExsit = true;
+         
             }
 
           }
@@ -149,17 +156,22 @@ export class CartPage implements OnInit {
         //           }
         //       }
         //   }
-          
-         
+        for (let index = 0; index < this.thisProductData.length; index++) {
+          this.finalProductData[index] = this.thisProductData[index];
+          this.finalProductData[index].updateQty = parseInt(this.thisProductData[index].qty) - parseInt(this.thisProductData[index].productQty);
+          console.log(this.finalProductData[index].updateQty);
+        }
+
+      } else {//else check qty
+        this.alertCheckQty();
+        
+      }
          }else{
            console.log(false);
            this.status(false);
          }
 
-        } else {//else check qty
-          this.alertCheckQty();
-          
-        }
+       
                   
         });
         
@@ -173,7 +185,7 @@ export class CartPage implements OnInit {
 
  confirmOrder(){
   this.enterAccount();
-  this.testOmise();
+  //this.testOmise();
   // console.log(this.token.id);
   // console.log('ราคารวม : '+this.cost);
  }
@@ -191,7 +203,7 @@ export class CartPage implements OnInit {
         if(res != null){
           console.log(res);
           res[0].password;
-          this.checkPassword(res[0].password,res[0].username,res[0].balance);
+          this.checkPassword(res[0].password,res[0].username,res[0].balance,this.cost);
         }else{
           this.alertUserIncorrect();
         }
@@ -203,32 +215,43 @@ export class CartPage implements OnInit {
  confirmOrder3(custumer,balance){
   console.log(custumer);
 
-   let url:string = "http://primx.online/confirmOrder.php";
-    let datapost = new FormData();
-    datapost.append('shopId',this.shopId);
-    datapost.append('customer',custumer);
-    datapost.append('amount',this.cost);
+    this.addOrder(custumer);
+    this.updateCustumerBalance(custumer,balance);
+    this.updateShopBalance();
+    this.updateProduct();
     
-    
-    let data:Observable<any> =  this.https.post(url,datapost);
-    data.subscribe(res =>{
-      if(res != 'error'){
-        console.log(res);
-       // res[0].password;
-        //this.checkPassword(res[0].password);
-      }else{
-        console.log("error");
-        //this.alertUserIncorrect();
-      }
-    });
+}
 
+
+addOrder(custumer){
+  let url:string = "http://primx.online/confirmOrder.php";
+  let datapost = new FormData();
+  datapost.append('shopId',this.shopId);
+  datapost.append('customer',custumer);
+  datapost.append('amount',this.cost);
+  
+  
+  let data:Observable<any> =  this.https.post(url,datapost);
+  data.subscribe(res =>{
+    if(res != 'error'){
+      console.log(res);
+     // res[0].password;
+      //this.checkPassword(res[0].password);
+    }else{
+      console.log("error");
+      //this.alertUserIncorrect();
+    }
+  });
+}
+
+
+updateCustumerBalance(custumer,balance){
+    let Userbalance = parseFloat(balance)-parseFloat(this.cost);
+    
     let url2:string = "http://primx.online/updateBalance.php";
     let datapost2 = new FormData();
-    this.balance = balance-this.cost;
-    datapost2.append('balance',this.balance);
+    datapost2.append('balance',Userbalance.toFixed(2));
     datapost2.append('username',custumer);
-    
-    
     let data2:Observable<any> =  this.https.post(url2,datapost2);
     data2.subscribe(res =>{
       if(res != 'error'){
@@ -240,10 +263,81 @@ export class CartPage implements OnInit {
         console.log("error");
         //this.alertUserIncorrect();
       }
-    });
-
-
+    });     
+   
+   
 }
+
+updateShopBalance(){
+
+  let url:string = "http://primx.online/selectUserData.php";
+
+  let datapost = new FormData();
+  let username = sessionStorage.getItem("username");
+  datapost.append('username',username);
+  //datapost.append('password',this.userData.password);
+  let data:Observable<any> =  this.https.post(url,datapost);
+  data.subscribe(res =>{
+
+    console.log(res);
+    let shopbalance = res[0].balance;
+
+    let url2:string = "http://primx.online/updateBalance.php";
+    let datapost2 = new FormData();
+    let newBalance = parseFloat(shopbalance)+parseFloat(this.cost);
+
+    datapost2.append('balance',newBalance.toFixed(2));
+    datapost2.append('username',username);
+
+    let data2:Observable<any> =  this.https.post(url2,datapost2);
+    data2.subscribe(res =>{
+      if(res != 'error'){
+        console.log(res);
+        console.log("updateShopBalance ok");
+        //this.alertSuccess();
+       // res[0].password;
+        //this.checkPassword(res[0].password);
+      }else{
+        console.log("updateShopBalance error");
+        //this.alertUserIncorrect();
+      }
+    });     
+
+  }
+  );
+
+ 
+}
+
+updateProduct(){
+
+  for (let index = 0; index < this.finalProductData.length; index++) {
+    console.log(this.finalProductData[index]);
+
+    let url2:string = "http://primx.online/updateProductAfterConfrim.php";
+    let datapost2 = new FormData();
+    datapost2.append('shopId',this.finalProductData[index].shopId);
+    datapost2.append('barcode',this.finalProductData[index].barcode);
+    datapost2.append('qty',this.finalProductData[index].updateQty);
+    
+    let data2:Observable<any> =  this.https.post(url2,datapost2);
+    data2.subscribe(res =>{
+      if(res != 'error'){
+        console.log(res);
+        console.log("updateProduct ok");
+       // this.alertSuccess();
+       // res[0].password;
+        //this.checkPassword(res[0].password);
+      }else{
+        console.log("updateProduct error");
+        //this.alertUserIncorrect();
+      }
+    });     
+  }
+
+  
+}
+
 
  ionViewWillEnter(){
  }
@@ -317,9 +411,10 @@ export class CartPage implements OnInit {
           handler: data => {
             console.log('Confirm Ok');
             this.custumer = data.user;
-            //console.log(this.custumer);
+            console.log(this.custumer);
             if(this.custumer !=null){
               this.confirmOrder2(data.user);
+             
             }else{
               this.alertUserIncorrect();
             }
@@ -331,7 +426,7 @@ export class CartPage implements OnInit {
     await alert.present();    
   }
 
-  async checkPassword(password,user,balance) {
+  async checkPassword(password,user,balance,cost) {
     const alert = await this.alertController.create({
       header: 'Cofirm Password',
       inputs: [
@@ -357,7 +452,12 @@ export class CartPage implements OnInit {
             console.log('Ok');
             if(password == data.password){
               console.log("success");
-              this.confirmOrder3(user,balance);
+              let checkbalance = data.balance - data.cost;
+              if (checkbalance>=0) {
+                this.confirmOrder3(user,balance);
+              } else {
+                this.alertTopup();
+              }
             }else{
               console.log("password not compare");
               this.alertPasswordIncorrect();
@@ -419,7 +519,25 @@ export class CartPage implements OnInit {
 
     await alert.present();
   }
+
+  async alertTopup() {
+    const alert = await this.alertController.create({
+      header: 'balance not enough',
+      //subHeader: 'Subtitle',
+      message: 'Please top up',
+      buttons: [{
+        text: 'Ok',
+        handler: () => {
+        window.location.reload();
+        }
+      }]
+    });
+
+    await alert.present();
+  }
+
   ngOnInit() {
+  
     
   }
 
@@ -439,12 +557,13 @@ export class CartPage implements OnInit {
     //this.token.id = data.id;
     //console.log('token : '+data.id);
     console.log(this.token.id);
-    console.log('ราคารวม : '+this.cost+'00');
+    let total = this.cost*100;
+    console.log('ราคารวม : '+this.cost*100);
 
     let url:string = "http://primx.online/checkout.php";
     let datapost = new FormData();
     datapost.append('omiseToken',this.token.id);
-    datapost.append('cost',this.cost+'00');
+    datapost.append('cost',total.toString());
     
     let data:Observable<any> =  this.https.post(url,datapost);
     data.subscribe(res =>{
