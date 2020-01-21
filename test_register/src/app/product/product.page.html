@@ -1,3 +1,4 @@
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -7,10 +8,15 @@
     <ion-button color="success" fill="clear" (click)="addProduct()" slot="end" routerLink="/addproduct" routerDirection="forward"> 
         <ion-icon slot="icon-only" name="add-circle"></ion-icon>
       </ion-button>
+    </ion-toolbar>
+      <ion-toolbar>
+      <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
   </ion-toolbar>
+  
 </ion-header>
 
 <ion-content >
+  
     
     <div *ngFor="let product of products">
         <ion-card>

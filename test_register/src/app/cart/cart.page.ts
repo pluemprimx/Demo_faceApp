@@ -247,25 +247,29 @@ addOrder(custumer){
 
 addOrderDetail(orderId){
   for (let index = 0; index < this.thisProductData.length; index++) {
- 
-  let url:string = "http://primx.online/addOrderDetail.php";
-  let datapost = new FormData();
-  datapost.append('orderId',orderId);
-  datapost.append('barcode',this.thisProductData[index].barcode);
-  datapost.append('qty',this.thisProductData[index].productQty);
-  datapost.append('amount',this.thisProductData[index].cost);
-  console.log("addOrderDetail : "+this.thisProductData[index].barcode);
-  
-  let data:Observable<any> =  this.https.post(url,datapost);
-  data.subscribe(res =>{
-    if(res != null){
-      console.log(res);
+    if (this.thisProductData[index].shop.toString() == sessionStorage.getItem("username")) {
+      let url:string = "http://primx.online/addOrderDetail.php";
+      let datapost = new FormData();
+      datapost.append('orderId',orderId);
+      datapost.append('barcode',this.thisProductData[index].barcode);
+      datapost.append('qty',this.thisProductData[index].productQty);
+      datapost.append('amount',this.thisProductData[index].cost);
+      console.log("addOrderDetail : "+this.thisProductData[index].productName);
       
-     }else{
+      let data:Observable<any> =  this.https.post(url,datapost);
+      data.subscribe(res =>{
+        if(res != null){
+          console.log(res);
+          
+         }else{
+          console.log("error");
+        //   //this.alertUserIncorrect();
+         }
+      });
+    } else {
       console.log("error");
-    //   //this.alertUserIncorrect();
-     }
-  });
+    }
+ 
 }
 }
 
@@ -330,7 +334,9 @@ updateShopBalance(){
 
   }
   );
-
+  for (let index = 0; index < this.thisProductData.length; index++) {
+    console.log(this.thisProductData[index]);
+  }
  
 }
 

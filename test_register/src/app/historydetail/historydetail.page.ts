@@ -25,7 +25,8 @@ export class HistorydetailPage implements OnInit {
   selectOrderDetail(orderId){
     let url:string = "http://primx.online/selectOrderDetail.php";
     let datapost = new FormData();
-    //let username = sessionStorage.getItem("username");
+    let username = sessionStorage.getItem("username");
+    datapost.append('shop',username);
     datapost.append('orderId',orderId);
     let data:Observable<any> =  this.https.post(url,datapost);
     data.subscribe(res =>{

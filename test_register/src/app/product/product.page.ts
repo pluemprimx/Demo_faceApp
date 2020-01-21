@@ -16,11 +16,13 @@ export class ProductPage implements OnInit {
   products:any= [];
   deleteProductData:any = {};
   barcode:any;
+  items: string[];
   constructor(
     public https:HttpClient,
     public alertController: AlertController,
     public toastController: ToastController,private page : Router,private datapass :DatapassService
-    ) { }
+    ) {
+     }
 
   getProduct(){
     let  url = "http://primx.online/selectProduct.php"
@@ -37,6 +39,7 @@ export class ProductPage implements OnInit {
   
             for (let index = 0; index < productData.length; index++) {
               this.products[index] = productData[index];
+              
             }
 
        }else{
@@ -48,10 +51,10 @@ export class ProductPage implements OnInit {
     deleteProduct(productData){
       let  url = "http://primx.online/deleteProduct.php"
       let datapost = new FormData();
-      console.log(productData.shopId);
+      console.log(productData.shop);
       console.log(productData.barcode);
 
-      datapost.append('shopId',productData.shopId);
+      datapost.append('shop',productData.shop);
       datapost.append('barcode',productData.barcode);
 
       let data:Observable<any> =  this.https.post(url,datapost);
@@ -125,6 +128,47 @@ async presentToast(productData) {
       this.page.navigateByUrl(nextpage);
       console.log("next is worked");
     }
+  }
+
+  getOneProduct(barcode){
+    this.products.length = 0 ;
+    let  url = "http://primx.online/searchProduct.php"
+    let datapost = new FormData();
+    datapost.append('shop',sessionStorage.getItem("username"));
+    datapost.append('barcode',barcode);
+   // datapost.append('password',this.loginData.password);
+    let data:Observable<any> =  this.https.post(url,datapost);
+    data.subscribe(product =>{
+      console.log(product);
+          if(product != null){
+            console.log("ok"); 
+              
+            for (let index = 0; index < product.length; index++) {
+              this.products[index] = product[index];
+            }
+
+       }else{
+       console.log(false);
+       this.products.length = 0 ;
+       }        
+      } );
+    }
+
+  
+
+getItems(ev: any) {
+  // Reset items back to all of the items
+ 
+  // set val to the value of the searchbar
+  const val = ev.target.value;
+  console.log(val);
+  // if the value is an empty string don't filter the items
+  if (val && val.trim() != '') {
+   this.getOneProduct(val);
+  }else{
+    this.getProduct();
+  }
 }
+
 
 }
