@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>History Top Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let topup of topupData">
+
+    <ion-card>
+      <ion-card-header color="success" >
+          <ion-label>+{{topup["amount"]}}</ion-label>
+      </ion-card-header>
+      <ion-card-header style="color: black;">
+          <ion-label> เลขที่รายการ : {{topup["topupId"]}} </ion-label><br>
+          <ion-label> วันที่ทำรายการ : {{topup["newDate"]}}</ion-label><br>
+          <ion-label> เวลา : {{topup["time"]}}</ion-label><br>
+          <ion-label> จำนวนเงิน : +{{topup["amount"]}} บาท</ion-label><br>
+      </ion-card-header> 
+    </ion-card>
+
+    </div>
+</ion-content>

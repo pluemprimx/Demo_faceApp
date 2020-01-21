@@ -15,7 +15,8 @@ export class HistorydetailPage implements OnInit {
   
   orderDetails:any=[];
   order:any=[];
-
+  date:any;
+  time:any;
   ngOnInit() {
     this.selectOrder(this.datapass.orderId);
     this.selectOrderDetail(this.datapass.orderId);
@@ -46,7 +47,52 @@ export class HistorydetailPage implements OnInit {
       console.log(res);
       this.order = res[0];
       this.order.status = this.datapass.orderStatus;
+      this.formatDate(res[0].date);
     });
 
   }
+
+  formatDate(oldDate){
+    var date = new Date(oldDate); // had to remove the colon (:) after the T in order to make it work
+    var day = date.getDate();
+    var monthIndex = date.getMonth();    
+    let b:any;
+    switch(monthIndex+1){
+        case 1: b = "January";
+            break;
+        case 2: b = "February";
+            break;
+        case 3: b = "March";
+            break;
+        case 4: b = "April";
+            break;
+        case 5: b = "May";
+            break;
+        case 6: b = "June"; 
+            break;
+        case 7: b = "July";
+            break;
+        case 8: b = "August";
+            break;
+        case 9: b = "September";
+            break;
+        case 10: b = "October";
+            break;
+        case 11: b = "November";
+            break;
+        case 12: b = "December";
+            break;
+        }
+    let month:any = b;
+    var year = date.getFullYear();
+    var minutes = date.getMinutes();
+    var hours = date.getHours();
+    var seconds = date.getSeconds();
+    var myFormattedDate = day+" "+month+" "+year;
+    var myFormattedtime = hours+":"+minutes+":"+seconds;
+    this.date = myFormattedDate;
+    this.time = myFormattedtime;
+    console.log(this.date+"  "+this.time)
+  }
+
 }

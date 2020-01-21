@@ -35,7 +35,7 @@
 <ion-card>
 
 <ion-card-header> 
-  <ion-segment mode="ios" color="tertiary">
+  <ion-segment mode="ios" color="dark">
     <ion-segment-button (click)="goProduct()">
       <ion-label><ion-icon name="book" size="large"></ion-icon></ion-label>
       <ion-label>product</ion-label>
@@ -52,9 +52,13 @@
 </ion-card-header> 
 </ion-card>
 
-  <ion-button color="medium" expand="block" fill="outline" (click)="history()">
+  <ion-button color="dark" expand="block" fill="outline" (click)="history()">
     <ion-icon name="clipboard"></ion-icon>
     History
+  </ion-button>
+  <ion-button color="dark" expand="block" fill="outline" (click)="historytopup()">
+    <ion-icon name="clipboard"></ion-icon>
+    History Top up
   </ion-button>
   <ion-button color="danger" expand="block" fill="outline" (click)="logout()">
     <ion-icon name="log-out"></ion-icon>

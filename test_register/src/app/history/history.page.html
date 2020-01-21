@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>History</ion-title>
   </ion-toolbar>
@@ -14,9 +14,10 @@
     <div *ngIf="order['status'] == 'receive';">
         <ion-card-header color="success">
           <ion-label> เลขที่รายการ : {{order["orderId"]}} </ion-label><br>
-          <ion-label> วันที่ทำรายการ : {{order["date"]}}</ion-label><br>
+          <ion-label> วันที่ทำรายการ : {{order["newDate"]}}</ion-label><br>
+          <ion-label> เวลา : {{order["time"]}}</ion-label><br>
           <ion-label> ลูกค้า : {{order["customer"]}}</ion-label><br>
-          <ion-label> จำนวนเงิน : {{order["amount"]}} บาท</ion-label><br>
+          <ion-label> จำนวนเงิน : +{{order["amount"]}} บาท</ion-label><br>
           <ion-label><ion-button size="small" fill="outline" color="light" (click)="historyDetail(order['orderId'],order['status'])">รายละเอียด<ion-icon name="open"></ion-icon></ion-button></ion-label>
         </ion-card-header>
       </div>
@@ -24,9 +25,10 @@
         <div *ngIf="order['status'] == 'pay';">
             <ion-card-header color="danger">
               <ion-label> เลขที่รายการ : {{order["orderId"]}} </ion-label><br>
-              <ion-label> วันที่ทำรายการ : {{order["date"]}}</ion-label><br>
+              <ion-label> วันที่ทำรายการ : {{order["newDate"]}}</ion-label><br>
+              <ion-label> เวลา : {{order["time"]}}</ion-label><br>
               <ion-label> ร้านค้า : {{order["shop"]}}</ion-label><br>
-              <ion-label> จำนวนเงิน : {{order["amount"]}} บาท</ion-label><br>
+              <ion-label> จำนวนเงิน : -{{order["amount"]}} บาท</ion-label><br>
               <ion-label><ion-button size="small" fill="outline" color="light" (click)="historyDetail(order['orderId'],order['status'])">รายละเอียด<ion-icon name="open"></ion-icon></ion-button></ion-label>
             </ion-card-header>
         </div>

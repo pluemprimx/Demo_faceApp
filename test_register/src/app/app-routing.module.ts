@@ -31,7 +31,8 @@ const routes: Routes = [
   { path: 'face', loadChildren: './face/face.module#FacePageModule' },
   { path: 'topup', loadChildren: './topup/topup.module#TopupPageModule' },
   { path: 'history', loadChildren: './history/history.module#HistoryPageModule' },
-  { path: 'historydetail', loadChildren: './historydetail/historydetail.module#HistorydetailPageModule' }
+  { path: 'historydetail', loadChildren: './historydetail/historydetail.module#HistorydetailPageModule' },
+  { path: 'history-topup', loadChildren: './history-topup/history-topup.module#HistoryTopupPageModule' }
 ];
 
 

@@ -25,7 +25,7 @@ export class ProductPage implements OnInit {
     let  url = "http://primx.online/selectProduct.php"
         
     let datapost = new FormData();
-    datapost.append('shopId',this.shopId);
+    datapost.append('shop',sessionStorage.getItem("username"));
    // datapost.append('password',this.loginData.password);
   
     let data:Observable<any> =  this.https.post(url,datapost);

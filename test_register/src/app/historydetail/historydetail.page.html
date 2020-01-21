@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>historydetail</ion-title>
+    <ion-title>History Detail</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,9 +14,10 @@
         <ion-card-header style="color: black;">
           <ion-icon name="list-box"></ion-icon>
           <ion-label> เลขที่รายการ : {{order["orderId"]}} </ion-label><br>
-          <ion-label> วันที่ทำรายการ : {{order["date"]}}</ion-label><br>
+          <ion-label> วันที่ทำรายการ : {{date}} </ion-label><br> 
+          <ion-label>เวลา : {{time}}</ion-label><br>
           <ion-label> ร้านค้า : {{order["shop"]}}</ion-label><br>
-          <ion-label> จำนวนเงิน : {{order["amount"]}} บาท</ion-label><br>
+          <ion-label> จำนวนเงิน : -{{order["amount"]}} บาท</ion-label><br>
         </ion-card-header>
       </ion-card>
     </div>
@@ -26,9 +27,10 @@
             <ion-card-header style="color: black;">
               <ion-icon name="list-box"></ion-icon>
               <ion-label> เลขที่รายการ : {{order["orderId"]}} </ion-label><br>
-              <ion-label> วันที่ทำรายการ : {{order["date"]}}</ion-label><br>
+              <ion-label> วันที่ทำรายการ : {{date}} </ion-label><br>
+              <ion-label>เวลา : {{time}}</ion-label><br>
               <ion-label> ลูกค้า : {{order["customer"]}}</ion-label><br>
-              <ion-label> จำนวนเงิน : {{order["amount"]}} บาท</ion-label><br>
+              <ion-label> จำนวนเงิน : +{{order["amount"]}} บาท</ion-label><br>
             </ion-card-header>
           </ion-card>
         </div>

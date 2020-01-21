@@ -45,7 +45,7 @@ export class AddproductPage implements OnInit {
        let url:string = "http://primx.online/addproduct.php";
      
        let datapost = new FormData();
-       datapost.append('shopId',this.shopId);
+       datapost.append('shop',sessionStorage.getItem("username"));
        datapost.append('barcode',this.productData.barcode);
        datapost.append('productName',this.productData.productName);
        datapost.append('price',this.productData.price);

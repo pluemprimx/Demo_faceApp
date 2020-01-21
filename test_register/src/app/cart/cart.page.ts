@@ -71,7 +71,7 @@ export class CartPage implements OnInit {
       let url:string = "http://primx.online/checkProduct.php";
     
       let datapost = new FormData();
-      datapost.append('shopId',this.shopId);
+      datapost.append('shop',sessionStorage.getItem("username"));
       datapost.append('barcode',this.cartData.barcode);
     
       let data:Observable<any> =  this.https.post(url,datapost);
@@ -226,7 +226,7 @@ export class CartPage implements OnInit {
 addOrder(custumer){
   let url:string = "http://primx.online/confirmOrder.php";
   let datapost = new FormData();
-  datapost.append('shopId',this.shopId);
+ //datapost.append('shopId',this.shop);
   datapost.append('shop',sessionStorage.getItem("username"));
   datapost.append('customer',custumer);
   datapost.append('amount',this.cost);
@@ -341,7 +341,8 @@ updateProduct(){
 
     let url2:string = "http://primx.online/updateProductAfterConfrim.php";
     let datapost2 = new FormData();
-    datapost2.append('shopId',this.finalProductData[index].shopId);
+    let username = sessionStorage.getItem("username");
+    datapost2.append('shop',username);
     datapost2.append('barcode',this.finalProductData[index].barcode);
     datapost2.append('qty',this.finalProductData[index].updateQty);
     
@@ -438,7 +439,11 @@ updateProduct(){
             this.custumer = data.user;
             console.log(this.custumer);
             if(this.custumer !=null){
-              this.confirmOrder2(data.user);
+              if (this.custumer!=sessionStorage.getItem("username")) {
+                this.confirmOrder2(data.user);
+              } else {
+                this.alertUserAsShop();
+              }
              
             }else{
               this.alertUserIncorrect();
@@ -511,6 +516,17 @@ updateProduct(){
   async alertUserIncorrect() {
     const alert = await this.alertController.create({
       header: 'Username Incorrect',
+      //subHeader: 'Subtitle',
+      message: 'Please try again',
+      buttons: ['Ok']
+    });
+
+    await alert.present();
+  }
+
+  async alertUserAsShop() {
+    const alert = await this.alertController.create({
+      header: 'Username as shop!',
       //subHeader: 'Subtitle',
       message: 'Please try again',
       buttons: ['Ok']

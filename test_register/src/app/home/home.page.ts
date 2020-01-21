@@ -68,6 +68,13 @@ history(){
     console.log("history is worked");
 }
 
+historytopup(){
+  let nextpage :string = "history-topup";
+    this.page.navigateByUrl(nextpage);
+    console.log("history topup is worked");
+}
+
+
 logout(){
   sessionStorage.removeItem("username");
   console.log("logout is worked");

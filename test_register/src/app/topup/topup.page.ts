@@ -74,6 +74,7 @@ export class TopupPage implements OnInit {
       let lastMoney:any = this.cost-(parseFloat(omiseCost)+parseFloat(vat));
       console.log(lastMoney);
       this.updateBalance(lastMoney);
+      this.topupLog(lastMoney);
 
       } else {
         this.alertError();
@@ -82,6 +83,27 @@ export class TopupPage implements OnInit {
       
     });
 
+    }
+
+    topupLog(amount){
+      let url2:string = "http://primx.online/topupLog.php";
+      let datapost2 = new FormData();
+      datapost2.append('username',this.username);
+      datapost2.append('amount',amount.toFixed(2));
+
+      let data2:Observable<any> =  this.https.post(url2,datapost2);
+      data2.subscribe(res =>{
+        if(res != 'error'){
+          console.log(res);
+          //this.alertSuccess();
+         // res[0].password;
+          //this.checkPassword(res[0].password);
+        }else{
+          console.log("error");
+         // this.alertError();
+          //this.alertUserIncorrect();
+        }
+      });
     }
 
 

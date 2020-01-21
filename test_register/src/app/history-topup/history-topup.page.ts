@@ -5,61 +5,39 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-history',
-  templateUrl: './history.page.html',
-  styleUrls: ['./history.page.scss'],
+  selector: 'app-history-topup',
+  templateUrl: './history-topup.page.html',
+  styleUrls: ['./history-topup.page.scss'],
 })
-export class HistoryPage implements OnInit {
+export class HistoryTopupPage implements OnInit {
 
-  orders:any=[];
-  orderDetails:any=[]
+  constructor(public https:HttpClient,private page : Router) { }
+
+  topupData:any=[];
   date:any;
   time:any;
-
-  constructor(public https:HttpClient,private page : Router,private datapass :DatapassService) { }
-
   ngOnInit() {
-    this.showHistory();
+    this.selectTopupLog();
   }
 
-  showHistory(){
-    let url:string = "http://primx.online/selectOrderHistory.php";
-
+  selectTopupLog(){
+    let url:string = "http://primx.online/selectTopupLog.php";
     let datapost = new FormData();
     let username = sessionStorage.getItem("username");
     datapost.append('username',username);
-    //datapost.append('password',this.userData.password);
-  
     let data:Observable<any> =  this.https.post(url,datapost);
     data.subscribe(res =>{
-      console.log(res);  
+      console.log(res);
       for (let index = 0; index < res.length; index++) {
-        this.orders[index] = res[index];
-        if (this.orders[index].shop==username) {
-          this.orders[index].status = "receive";
-          this.formatDate(this.orders[index].date);
-          this.orders[index].newDate = this.date;
-          this.orders[index].time = this.time
-        } else if(this.orders[index].customer==username){
-          this.orders[index].status = "pay";
-          this.formatDate(this.orders[index].date);
-          this.orders[index].newDate = this.date;
-          this.orders[index].time = this.time
-        }
-        console.log(this.orders[index]);
+        this.topupData[index] = res[index];
+        this.formatDate(this.topupData[index].date);
+        this.topupData[index].newDate = this.date;
+        this.topupData[index].time = this.time
       }
+    
+     
+    });
 
-    }
-    );
-  }
-
-  historyDetail(orderId,status){
-    console.log(orderId);
-    this.datapass.orderId = orderId;
-    this.datapass.orderStatus = status;
-    let nextpage :string = "historydetail";
-    this.page.navigateByUrl(nextpage);
-    console.log("historydetail is worked");
   }
 
   formatDate(oldDate){
@@ -104,20 +82,4 @@ export class HistoryPage implements OnInit {
     this.time = myFormattedtime;
     console.log(this.date+"  "+this.time)
   }
-  
-
-  // modalPresent(){
-  //   this.presentModal();
-  // }
-
-  // async presentModal() {
-  //   const modal = await this.modalController.create({
-  //     component: ModelPage,
-  //     componentProps: {
-       
-  //     }
-  //   });
-  //   return await modal.present();
-  // }
-
 }
