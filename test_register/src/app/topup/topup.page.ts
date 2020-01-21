@@ -35,7 +35,8 @@ export class TopupPage implements OnInit {
 
   topup(){
     console.log(this.cardData.cardNumber);
-    this.tokenOmise(this.cardData);
+    this.selectUser();
+   
   }
 
 
@@ -176,5 +177,70 @@ export class TopupPage implements OnInit {
       });
       await alert.present();
     }
+
+
+    selectUser(){
+       let url:string = "http://primx.online/checkFace.php";
+        let datapost = new FormData();
+        //datapost.append('shopId',this.shopId);
+        datapost.append('username',sessionStorage.getItem("username"));
+        let data:Observable<any> =  this.https.post(url,datapost);
+        data.subscribe(res =>{    
+            console.log(res);
+            this.checkPassword(res[0].password);
+        });
+  
+   }
+    
+  async checkPassword(password) {
+    const alert = await this.alertController.create({
+      header: 'Cofirm Password',
+      inputs: [
+        {
+          name: 'password',
+          type: 'password',
+          id: 'password',
+          placeholder: 'Enter your password'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Cancel');
+            window.location.reload();
+          }
+        }, {
+          text: 'Ok',
+          handler: data => {
+            console.log('Ok');
+            if(password == data.password){
+              console.log("confrim");
+              this.tokenOmise(this.cardData);
+            }else{
+              console.log("password not compare");
+              this.alertPasswordIncorrect();
+            }
+            //console.log(this.custumer);
+            //this.alertPasswordIncorrect(data.user);
+          }
+        }
+      ]
+    });
+    await alert.present();    
+  }
+
+  async alertPasswordIncorrect() {
+    const alert = await this.alertController.create({
+      header: 'Password Incorrect',
+      //subHeader: 'Subtitle',
+      message: 'Please try again',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
    
 }
