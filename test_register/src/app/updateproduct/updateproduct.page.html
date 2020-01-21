@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Update Product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form #form="ngForm" (ngSubmit)="updateProduct(form)">
+<ion-list lines="full" class="ion-no-margin ion-no-padding">
+
+  <!-- <ion-input required type="number" name="shopId" id="shopId" value='1' [(ngModel)]="productData.shopId" ></ion-input> -->
+  <ion-card style="color: black;" class="ion-padding">
+  <ion-label>Barcode : {{productData.barcode}}</ion-label>
+</ion-card>
+  <ion-input required type="hidden"  name="barcode" id="barcode"  [(ngModel)]="productData.barcode" ></ion-input>
+  <ion-item>
+      <ion-label position="stacked">Product Name <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required type="text"  name="productName" id="productName"  [(ngModel)]="productData.productName" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label position="stacked">Price <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input required type="number"  name="price" id="price"[(ngModel)]="productData.price"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label position="stacked">Quantity <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="number"  name="qty" id="qty"  [(ngModel)]="productData.qty" ></ion-input>
+        </ion-item>
+
+</ion-list>
+
+<div class="ion-padding">
+    <ion-button expand="block" type="submit" class="button" [disabled]="form.invalid">Update</ion-button>
+  </div>
+</form>
+  <!-- <div *ngIf="checkLogin != false; else elseBlock"> </div>
+  <ng-template #elseBlock>Username or Password is incorrect!</ng-template> -->
+  
+</ion-content>

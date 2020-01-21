@@ -26,7 +26,11 @@
             </ion-item>
   
             <ion-item-options side="end">
-                <ion-item-option color="warning"><ion-icon name="create"></ion-icon></ion-item-option>
+                <ion-item-option color="warning">
+                  <ion-button fill="clear" color="light"  (click)="updateProduct(product)">
+                    <ion-icon name="create"></ion-icon>
+                  </ion-button>
+                  </ion-item-option>
             </ion-item-options>
   
             <ion-item-options side="start">

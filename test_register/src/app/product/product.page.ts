@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ToastController , AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { DatapassService } from '../datapass.service';
 
 @Component({
   selector: 'app-product',
@@ -18,7 +19,7 @@ export class ProductPage implements OnInit {
   constructor(
     public https:HttpClient,
     public alertController: AlertController,
-    public toastController: ToastController,private page : Router
+    public toastController: ToastController,private page : Router,private datapass :DatapassService
     ) { }
 
   getProduct(){
@@ -67,6 +68,13 @@ export class ProductPage implements OnInit {
        }        
       } );
 
+    }
+
+    updateProduct(product){
+    this.datapass.barcode = product.barcode;
+    let nextpage :string = "updateproduct";
+    this.page.navigateByUrl(nextpage);
+    console.log("updateproduct is worked");
     }
 
   ionViewWillEnter() {

@@ -32,7 +32,8 @@ const routes: Routes = [
   { path: 'topup', loadChildren: './topup/topup.module#TopupPageModule' },
   { path: 'history', loadChildren: './history/history.module#HistoryPageModule' },
   { path: 'historydetail', loadChildren: './historydetail/historydetail.module#HistorydetailPageModule' },
-  { path: 'history-topup', loadChildren: './history-topup/history-topup.module#HistoryTopupPageModule' }
+  { path: 'history-topup', loadChildren: './history-topup/history-topup.module#HistoryTopupPageModule' },
+  { path: 'updateproduct', loadChildren: './updateproduct/updateproduct.module#UpdateproductPageModule' }
 ];
 
 

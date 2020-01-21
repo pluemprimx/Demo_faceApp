@@ -14,6 +14,6 @@ export class DatapassService {
 
   public orderId;
   public orderStatus;
-
+  public barcode;
   constructor() { }
 }
