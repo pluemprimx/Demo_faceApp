@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { NavController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import Omise from 'omise-react-native';
+import { promise } from 'protractor';
+import { error } from 'util';
 Omise.config('pkey_test_5ilqmzh9rqew4gmwdr3', '2015-11-17');
 
 @Component({
@@ -24,6 +26,7 @@ export class TopupPage implements OnInit {
   cost:any;
   username:any = sessionStorage.getItem("username");
   balance:any;
+  error:any={};
   ngOnInit() {
     if (sessionStorage.getItem("username")==null) {
       let nextpage :string = "login";
@@ -31,59 +34,98 @@ export class TopupPage implements OnInit {
       console.log("next is worked");
     }
   
+  
   }
 
   topup(){
-    console.log(this.cardData.cardNumber);
-    this.selectUser();
-   
+    var date = new Date();
+    var thisYear = date.getUTCFullYear();
+    var thisMonth = date.getUTCMonth()+1;
+    console.log(thisMonth);
+    // if (this.cardData.expiryMonth<=12) {
+    //   if (this.cardData.expiryYear>=thisYear) {
+    //     if (this.cardData.expiryMonth>=thisMonth||this.cardData.expiryYear>thisYear) {
+     //     this.selectUser();
+    //     } else {
+    //       this.alertError();
+    //     }
+       
+    //   } else {
+    //     this.alertError();
+    //   }
+      
+    // } else {
+    //   this.alertError();
+    // }
+    
+    this.tokenOmise(this.cardData);
   }
 
 
   async tokenOmise(cardData) {
-    this.token = await Omise.createToken({
-        'card': {
-            'name': cardData.name,
-            'city': 'Bangkok',
-            'postal_code': 10320,
-            'number': cardData.cardNumber,
-            'expiration_month': cardData.expiryMonth,
-            'expiration_year': cardData.expiryYear,
-            'security_code': cardData.CVV
-        }
-    });
-
-    this.cost = cardData.cost;
-    //this.token.id = data.id;
-    //console.log('token : '+data.id);
-    console.log(this.token.id);
-    let total = this.cost*100;
-    console.log('ราคารวม : '+this.cost*100);
-
-    let url:string = "http://primx.online/checkout.php";
-    let datapost = new FormData();
-    datapost.append('omiseToken',this.token.id);
-    datapost.append('cost',total.toString());
+try {
+  this.token = await Omise.createToken({
+    'card': {
+        'name': cardData.name,
+        'city': 'Bangkok',
+        'postal_code': 10320,
+        'number': cardData.cardNumber,
+        'expiration_month': cardData.expiryMonth,
+        'expiration_year': cardData.expiryYear,
+        'security_code': cardData.CVV
+    }
+});;
+  
+} catch (error) {
+  error.then(value =>{
+    this.error=value.message;
+    this.alertError(this.error);
+  } );
+ 
+ 
+}
+   
+      
+        this.cost = cardData.cost;
+        //this.token.id = data.id;
+        //console.log('token : '+data.id);
+        console.log(this.token.id);
+        let total = this.cost*100;
+        console.log('ราคารวม : '+this.cost*100);
+    try {
+      let url:string = "http://primx.online/checkout.php";
+        let datapost = new FormData();
+        datapost.append('omiseToken',this.token.id);
+        datapost.append('cost',total.toString());
+        
+        let data:Observable<any> =  this.https.post(url,datapost);
+        data.subscribe(res =>{
+          console.log(res);
+          if (res.status == 'successful') {
+            let omiseCost:any = ((res.amount/100)*0.0365).toFixed(2);
+          let vat:any = (omiseCost*0.07).toFixed(2);
+          
+          let lastMoney:any = this.cost-(parseFloat(omiseCost)+parseFloat(vat));
+          console.log(lastMoney);
+          this.updateBalance(lastMoney);
+          this.topupLog(lastMoney);
     
-    let data:Observable<any> =  this.https.post(url,datapost);
-    data.subscribe(res =>{
-      console.log(res.status);
-      if (res.status == 'successful') {
-        let omiseCost:any = ((res.amount/100)*0.0365).toFixed(2);
-      let vat:any = (omiseCost*0.07).toFixed(2);
-      
-      let lastMoney:any = this.cost-(parseFloat(omiseCost)+parseFloat(vat));
-      console.log(lastMoney);
-      this.updateBalance(lastMoney);
-      this.topupLog(lastMoney);
+          } else {
 
-      } else {
-        this.alertError();
-      }
-      
-      
-    });
-
+            this.alertError("");
+          }     
+          
+        }); 
+    } catch (error) {
+      error.then(value =>{
+        this.error=value.message;
+        this.alertError(this.error);
+      } );
+    }
+        
+     
+    
+ 
     }
 
     topupLog(amount){
@@ -138,7 +180,7 @@ export class TopupPage implements OnInit {
               //this.checkPassword(res[0].password);
             }else{
               console.log("error");
-              this.alertError();
+              this.alertError("");
               //this.alertUserIncorrect();
             }
           });
@@ -163,11 +205,11 @@ export class TopupPage implements OnInit {
       await alert.present();
     }
 
-    async alertError() {
+    async alertError(message) {
       const alert = await this.alertController.create({
         header: 'Top up Error!',
-        //subHeader: 'Confirm Order Success',
-       // message: 'Please try again',
+        subHeader: message,
+        message: 'Please try again',
        buttons: [{
         text: 'Ok',
         handler: () => {

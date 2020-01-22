@@ -62,9 +62,10 @@ export class ProductPage implements OnInit {
       console.log(deleteProductData);
           if(deleteProductData != "error"){
             console.log("ok")
-            setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+            this.getProduct();
+            // setTimeout(() => {
+            //   window.location.reload();
+            // }, 3000);
             
        }else{
        console.log(false);

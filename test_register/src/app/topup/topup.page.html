@@ -22,20 +22,24 @@
         <ion-input required type="text" name="name" id="name" placeholder="Name on card" [(ngModel)]="cardData.name" ></ion-input>
       </ion-item>
 
-      <ion-item>
+      
         <ion-grid>
           <ion-row>
             <ion-col>
+              <ion-item>
           <ion-label position="stacked">Expiry month<ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="number" name="expiryMonth" id="expiryMonth" placeholder="MM"  pattern="[0-9]{2}" [(ngModel)]="cardData.expiryMonth" ></ion-input>
-             </ion-col>
+          <ion-input required type="number"  pattern="[0-9]{1,2}" name="expiryMonth" id="expiryMonth" placeholder="MM"  min="1" max="12" [(ngModel)]="cardData.expiryMonth" ></ion-input>
+              </ion-item>
+          </ion-col>    
              <ion-col>
+            <ion-item>
           <ion-label position="stacked">Expiry year<ion-text color="danger">*</ion-text></ion-label>
-          <ion-input required type="number" name="expiryYear" id="expiryYear" placeholder="YYYY"  pattern="[0-9]{4}" [(ngModel)]="cardData.expiryYear" ></ion-input>
+          <ion-input required type="number" name="expiryYear" id="expiryYear" placeholder="YYYY"  pattern="[0-9]{4}" min="2020" [(ngModel)]="cardData.expiryYear" ></ion-input>
+        </ion-item>
             </ion-col>  
             </ion-row>
           </ion-grid>
-        </ion-item>
+       
 
         <ion-item>
           <ion-label position="stacked">Security code<ion-text color="danger">*</ion-text></ion-label>
